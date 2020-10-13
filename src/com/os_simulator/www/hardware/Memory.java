@@ -7,8 +7,8 @@ package com.os_simulator.www.hardware;
  *   If having any question, contact iDemkors or God.
  */
 class Memory extends HardDevice{
-    private byte[] storage;
-    private int maxCapacity;
+    private byte[] storage;//内存中的信息
+    private int maxCapacity;//最大容量
     public Memory(String name){
         this.name = name;
         //内存容量暂定为2KB
@@ -25,7 +25,7 @@ class Memory extends HardDevice{
     public byte read(int address){
         if (address<0||address>=2048){
             status=2; return -1;
-        }
+        }//越界
         status=0;
         return storage[address];
     }

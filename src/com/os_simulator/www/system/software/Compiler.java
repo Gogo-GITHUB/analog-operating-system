@@ -92,7 +92,7 @@ public class Compiler {
 
     //获取加法命令的机器码
     private String comFromAdd(String commands){
-        String checkresgister = commands.replace("++", "");
+        String checkresgister = commands.replace(   "++", "");
         if (checkresgister.equals(resgister)){
             return operation[1] + aim[0] + "0001";
         }else {

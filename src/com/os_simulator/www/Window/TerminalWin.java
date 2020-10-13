@@ -39,13 +39,17 @@ public class TerminalWin extends SuperWin {
         TextArea textArea = new TextArea();
         textArea.setMaxSize(600,420);
         textArea.setMinSize(600,420);
-        textArea.setStyle("-fx-text-fill: rgba(0, 0, 0, 0.64);");
+         textArea.setStyle("-fx-text-fill:white");
+         textArea.setStyle("-fx-control-inner-background: black;");
+        /*textArea.setStyle("-fx-text-fill: rgba(0, 0, 0, 0.64);");*/
         textArea.setEditable(false);
 
         TextField textField = new TextField();
         textField.setMaxSize(600,30);
         textField.setMinSize(600,30);
 
+        textField.setStyle("-fx-text-fill:white");
+        textField.setStyle("-fx-control-inner-background: black;");
         button.setText("");
         button.setGraphic(imageView);
 

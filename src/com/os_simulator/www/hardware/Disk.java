@@ -20,9 +20,9 @@ class Disk extends HardDevice{
     private int sectorCount;
     Disk(String name){
         this.name = name;
-        maxCapacity = 16384;
-        sectorSize = 64;
-        sectorCount = 256;
+        maxCapacity = 16384;//最大容量
+        sectorSize = 64;//块容量
+        sectorCount = 256;//块数
         storage = new byte[maxCapacity];
         boolean hasError = false;
         //自纠错式加载虚拟硬盘数据，如无数据，新建数据文件
@@ -47,12 +47,12 @@ class Disk extends HardDevice{
         status=0;
         byte[] temp;
         try {
-            temp = Arrays.copyOfRange(storage,address*sectorSize,(address+1)*sectorSize);
+            temp = Arrays.copyOfRange(storage,address*sectorSize,(address+1)*sectorSize);//将address块内容载入
         }
         catch (Exception e){
-            status=2;
+            status=2;//标记状态
             temp=new byte[sectorSize];
-            Arrays.fill(temp, (byte) 0);
+            Arrays.fill(temp, (byte) 0);//返回全为0的块
         }
         return temp;
     }
@@ -63,10 +63,10 @@ class Disk extends HardDevice{
      * @param address
      */
     public void write(byte[] data,int address){
-        if(data.length!=sectorSize){
+        if(data.length!=sectorSize){//写入的数据超过一个块的最大容量
             status=1; return;
         }
-        if(address<0||address>=sectorCount){
+        if(address<0||address>=sectorCount){//非法地址
             status=2; return;
         }
         int index = address*sectorSize;
@@ -88,7 +88,7 @@ class Disk extends HardDevice{
         File diskfile = new File(filename);
         status=101;
         FileInputStream in = new FileInputStream(diskfile);
-        int count = in.read(storage);
+        int count = in.read(storage);//将disk.dat里的文件读入
         in.close();
         if(count==maxCapacity) status=0;
     }
@@ -112,7 +112,7 @@ class Disk extends HardDevice{
         File diskfile = new File(filename);
         status=102;
         FileOutputStream out = new FileOutputStream(diskfile);
-        out.write(storage);
+        out.write(storage);//存入disk.dat文件
         out.close();
         status=0;
     }

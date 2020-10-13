@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -22,9 +23,11 @@ public class Main extends Application {
 
         StackPane readyPane = new StackPane();//欢迎界面
 
-        readyPane.setStyle("-fx-background-color:#7EC0EE");
+        readyPane.setStyle("-fx-background-color:#212121");
         Text wellcome = new Text("Welcome");
+        wellcome.setFill(Color.WHITE);
         wellcome.setFont(new Font(50));
+
         readyPane.getChildren().add(wellcome);
         Scene readyScene = new Scene(readyPane, 1280, 750);
         primaryStage.setScene(readyScene);

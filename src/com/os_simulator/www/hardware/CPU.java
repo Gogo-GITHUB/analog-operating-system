@@ -14,7 +14,8 @@ import java.util.Map;
  *   内存 Memory:0
  *
 */
-public class CPU {
+public class
+CPU {
     private Memory memory;
     private Disk disk;
     private Map<String,Peripheral> peripherals;
@@ -138,7 +139,7 @@ public class CPU {
                 byte new_status = peripheral.getStatus();
                 if (new_status==-1){
                     status=-1;
-                    peripheral.reset();
+                    peripheral.reset();//中断解除
                     return status;
                 }
                 if (new_status==0){

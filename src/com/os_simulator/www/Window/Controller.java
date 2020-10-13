@@ -381,6 +381,7 @@ class AppPane{
                             "-fx-max-width: 50px; " +
                             "-fx-max-height: 50px;"
             );
+            button.setText("微信");
             //应用启动按钮事件
             button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
                 @Override

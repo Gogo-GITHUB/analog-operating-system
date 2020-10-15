@@ -56,6 +56,7 @@ public class Controller{
     private DoubleProperty baseWidth = new SimpleDoubleProperty((int) Toolkit.getDefaultToolkit().getScreenSize().width);//界面宽度
     private DoubleProperty baseHeight = new SimpleDoubleProperty((int)Toolkit.getDefaultToolkit().getScreenSize().height);//界面高度
     private ImageView imageView = new ImageView(new Image("/Background/El Capitan.jpg"));
+    private ImageView imageView1 = new ImageView(new Image("/icons/app.jpg"));
     private boolean isFullScreen = true;//全屏参数
     private Stage primaryStage;//引用主窗口
 
@@ -129,6 +130,9 @@ public class Controller{
 
         Button appsButton = new Button("应用列表");//创建应用列表窗口快捷键
         appsButton.setText("");
+        imageView1.setFitHeight(30);
+        imageView1.setFitWidth(30);
+        appsButton.setGraphic(imageView1);
         appsButton.setMinSize(80,30);
         appsButton.setStyle(
                 "-fx-background-radius: 5em; " +
@@ -350,7 +354,53 @@ class AppPane{
     private HBox scene = new HBox(5);
     private Controller controller;//引用controller
 
+    ArrayList<ImageView> imageviews = new ArrayList<>();
+    private ImageView i1 = new ImageView(new Image("/icons/weixin.jpg"));
+    private ImageView i2 = new ImageView(new Image("/icons/qq.jpg"));
+    private ImageView i3 = new ImageView(new Image("/icons/weibo.jpg"));
+    private ImageView i4 = new ImageView(new Image("/icons/bili.jpg"));
+    private ImageView i5 = new ImageView(new Image("/icons/taobao.jpg"));
+    private ImageView i6 = new ImageView(new Image("/icons/idea.jpg"));
+    private ImageView i7 = new ImageView(new Image("/icons/ec.jpg"));
+    private ImageView i8 = new ImageView(new Image("/icons/zhihu.jpg"));
+    private ImageView i9 = new ImageView(new Image("/icons/ps.jpg"));
+    private ImageView i10 = new ImageView(new Image("/icons/code.jpg"));
+
+    public void imageviews() {
+        i1.setFitWidth(30);
+        i1.setFitHeight(30);
+        i2.setFitHeight(30);
+        i2.setFitWidth(30);
+        i3.setFitHeight(30);
+        i3.setFitWidth(30);
+        i4.setFitHeight(30);
+        i4.setFitWidth(30);
+        i5.setFitHeight(30);
+        i5.setFitWidth(30);
+        i6.setFitHeight(30);
+        i6.setFitWidth(30);
+        i7.setFitHeight(30);
+        i7.setFitWidth(30);
+        i8.setFitHeight(30);
+        i8.setFitWidth(30);
+        i9.setFitHeight(30);
+        i9.setFitWidth(30);
+        i10.setFitHeight(30);
+        i10.setFitWidth(30);
+        imageviews.add(i1);
+        imageviews.add(i2);
+        imageviews.add(i3);
+        imageviews.add(i4);
+        imageviews.add(i5);
+        imageviews.add(i6);
+        imageviews.add(i7);
+        imageviews.add(i8);
+        imageviews.add(i9);
+        imageviews.add(i10);
+    }
+
     public AppPane(Controller controller, ArrayList<String> appList){
+        int i=0;
         this.controller = controller;
         stage.translateYProperty().bind(controller.baseHeightProperty().subtract(160));//属性绑定
         stage.minWidthProperty().bind(controller.baseWidthProperty());
@@ -359,10 +409,13 @@ class AppPane{
         stage.setMaxHeight(60);
         scene.setAlignment(Pos.CENTER);
         stage.getChildren().add(scene);
+        imageviews();
         //对应用注册表内全部应用创建应用启动按钮
         for (String app:appList){
             Button button = new Button(app);
+            button.setGraphic(imageviews.get(i));
             button.setMinSize(40,40);
+            i++;
             //应用启动按钮事件
             button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -381,7 +434,6 @@ class AppPane{
                             "-fx-max-width: 50px; " +
                             "-fx-max-height: 50px;"
             );
-            button.setText("微信");
             //应用启动按钮事件
             button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
                 @Override

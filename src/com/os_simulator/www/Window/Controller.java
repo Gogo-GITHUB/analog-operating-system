@@ -18,6 +18,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -30,6 +33,7 @@ import java.awt.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 
@@ -181,6 +185,7 @@ public class Controller{
             }
         });
 
+
         //设置按钮事件
         setter.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -204,6 +209,160 @@ public class Controller{
                 }
             }
         });
+
+
+
+
+        /*
+        **
+         * @description: 【快捷键的设置，T打开终端，Q关闭程序，S打开设置，Z切换壁纸】
+         * 暂时没有优化代码，因此代码耦合度比较高【实现功能第一，优化第二】
+         * 未完成：终端打开未完成，不知道怎么才能创建终端的页面出来
+         * @param:  按键TQSZ
+         * @return:
+         * @author: Jamkung
+         * @date: 2020/10/16 13:07
+         */
+        base.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                if (event.getCode().name().equals(KeyCode.T.getName())){
+                    System.out.println("键盘按下了按键=T");
+                    System.out.println("打开终端");
+                }else if (event.getCode().name().equals(KeyCode.S.getName())){
+                    System.out.println("键盘按下了按键=S");
+                    System.out.println("打开设置");
+                    if(!controllerSetter.isOpen()){
+                        positonI = (++positonI)%position.length;
+                        centerPane.getChildren().add(controllerSetter.getStage());
+                        controllerSetter.getStage().setTranslateX(position[positonI]);
+                        controllerSetter.getStage().setTranslateY(position[positonI]);
+                        controllerSetter.setOpen(true);
+                    }
+                }else if(event.getCode().name().equals(KeyCode.Q.getName())){
+                    System.out.println("键盘按下了按键=Q");
+                    System.out.println("关闭程序");
+                    System.exit(0);
+                }else if(event.getCode().name().equals(KeyCode.Z.getName())){
+                    System.out.println("键盘按下了按键=Z");
+                    System.out.println("切换壁纸");
+                    String[] backgrounds = new File("res/Background").list();
+                    List<String> backgroundList = FXCollections.observableArrayList(backgrounds);
+                    int index = (int) (Math.random()* backgroundList.size());
+                    System.out.println(backgroundList.get(index));
+                    boolean isFullScreen = true;
+                    try {
+                        controllerSetter.controller.getImageView().setImage(new Image("/Background/" + backgroundList.get(index)));
+                    }catch (Exception e){
+                        System.err.println("Background error!");
+                    }
+                    controllerSetter.controller.getPrimaryStage().setFullScreen(isFullScreen);
+                    controllerSetter.controller.setFullScreen(isFullScreen);
+                }
+            }
+        });
+
+
+        // 鼠标右键菜单及功能设置
+        ContextMenu rightButtonMenu = new ContextMenu();
+        MenuItem termial = new MenuItem("\t终端\t");
+        MenuItem setting = new MenuItem("\t设置\t");
+        MenuItem nextPic = new MenuItem(" 切换壁纸 ");
+        MenuItem closeMyWin = new MenuItem("\t关机\t");//关机按钮
+        rightButtonMenu.getItems().addAll(termial,closeMyWin, setting,nextPic);
+
+        termial.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                System.out.println("不知道怎么打开终端");
+//                controllerSetter.controller.creatWin("终端处理",controllerSetter.controller.getPathHashMap().get("终端处理"));
+//                controllerSetter.controller.getWinHashMap().get("终端处理").getStage().toFront();;
+//                System.out.println("controllerSetter.controller.getWinHashMap().get(\"终端处理\") == null");
+//                System.out.println(controllerSetter.controller.getWinHashMap().get("终端处理"));
+//                System.out.println("controllerSetter.controller.getWinHashMap().get(\"终端处理\").getStage().toFront();");
+
+//                if (controllerSetter.controller.getWinHashMap().get("终端处理") == null) {
+//                    controllerSetter.controller.creatWin("终端处理",controllerSetter.controller.getPathHashMap().get("终端处理"));
+//                }else{
+//                    controllerSetter.controller.getWinHashMap().get("终端处理").getStage().toFront();
+//                }
+            }
+        });
+
+        closeMyWin.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                System.exit(0);
+            }
+        });
+
+        setting.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                if(!controllerSetter.isOpen()){
+                    positonI = (++positonI)%position.length;
+                    centerPane.getChildren().add(controllerSetter.getStage());
+                    controllerSetter.getStage().setTranslateX(position[positonI]);
+                    controllerSetter.getStage().setTranslateY(position[positonI]);
+                    controllerSetter.setOpen(true);
+                }
+            }
+        });
+
+        nextPic.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                String[] backgrounds = new File("res/Background").list();
+                List<String> backgroundList = FXCollections.observableArrayList(backgrounds);
+                int index = (int) (Math.random()* backgroundList.size());
+                System.out.println(backgroundList.get(index));
+                boolean isFullScreen = true;
+                try {
+                    controllerSetter.controller.getImageView().setImage(new Image("/Background/" + backgroundList.get(index)));
+                }catch (Exception e){
+                    System.err.println("Background error!");
+                }
+                controllerSetter.controller.getPrimaryStage().setFullScreen(isFullScreen);
+                controllerSetter.controller.setFullScreen(isFullScreen);
+            }
+        });
+
+        /*
+        **
+         * @description: 右键单开菜单的功能，这两段代码耦合度很高，复制粘贴没有做抽取成组件方式调用，功能基本能实现（除了不会终端的打开命令）
+         * @param: 鼠标右键就能触发菜单
+         * @return:
+         * @author: Jamkung
+         * @date: 2020/10/16 14:13
+         */
+        centerPane.addEventFilter(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println(event.getX());//获取点击的x坐标
+                System.out.println(event.getY());//获取点击的y坐标
+                //判断是不是使用的右键点击
+                if(event.getButton().name().equals(MouseButton.SECONDARY.name())){
+                    System.out.println("右键点击");
+                    System.out.println("键盘按下了按键=右键" + event.getButton().name());
+                    System.out.println("appList");
+                    System.out.println(superAppLiat);
+                    rightButtonMenu.show(base, event.getScreenX(), event.getScreenY());
+
+                }else{
+                    rightButtonMenu.hide();
+                }
+            }
+        });
+
 
         appsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -502,7 +661,10 @@ class ControllerSetter extends SuperWin{
         comboBox.setPromptText("全屏");
         String[] backgrounds = new File("res/Background").list();
         ObservableList<String> backgroundList = FXCollections.observableArrayList(backgrounds);
+
+
         backgroundSelect = new ComboBox(backgroundList);
+
         backgroundSelect.setPromptText("El Capitan.jpg");
         Button save = new Button("应用");
         Text bizhi = new Text("壁纸设置：");

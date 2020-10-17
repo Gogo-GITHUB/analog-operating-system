@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Created by Sean on 2016/10/26.
  */
+
 public class CPUWin extends SuperWin{
 
     private ObservableList<String>  preparingProcessIds = FXCollections.observableArrayList();//就绪队列进程ID；
@@ -103,6 +104,9 @@ public class CPUWin extends SuperWin{
     }
 
 
+    /**
+     *
+     */
     //更新数据
     @Override
     public void update(){

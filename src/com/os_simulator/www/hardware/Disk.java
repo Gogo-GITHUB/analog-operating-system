@@ -82,6 +82,7 @@ class Disk extends HardDevice{
 
     /**
      * 从实际硬盘中尝试加载filename指定的虚拟硬盘，并读取数据（构造方法用）
+     * @description: 添加一个用户
      * @throws IOException
      */
     private void load() throws IOException {

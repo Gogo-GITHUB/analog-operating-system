@@ -220,7 +220,7 @@ public class Controller{
 
          *@description: 【快捷键的设置，T打开终端，Q关闭程序，S打开设置，Z切换壁纸】
          * 暂时没有优化代码，因此代码耦合度比较高【实现功能第一，优化第二】
-         * 未完成：终端打开未完成，不知道怎么才能创建终端的页面出来
+
          * @param:  按键TQSZ
          * @return:
          * @author: Jamkung
@@ -275,24 +275,20 @@ public class Controller{
         MenuItem nextPic = new MenuItem(" 切换壁纸 ");
         MenuItem closeMyWin = new MenuItem("\t关机\t");//关机按钮
         rightButtonMenu.getItems().addAll(termial,closeMyWin, setting,nextPic);
-
+        Controller controller=this;
         termial.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
             {
-                System.out.println("不知道怎么打开终端");
-//                controllerSetter.controller.creatWin("终端处理",controllerSetter.controller.getPathHashMap().get("终端处理"));
-//                controllerSetter.controller.getWinHashMap().get("终端处理").getStage().toFront();;
-//                System.out.println("controllerSetter.controller.getWinHashMap().get(\"终端处理\") == null");
-//                System.out.println(controllerSetter.controller.getWinHashMap().get("终端处理"));
-//                System.out.println("controllerSetter.controller.getWinHashMap().get(\"终端处理\").getStage().toFront();");
-
-//                if (controllerSetter.controller.getWinHashMap().get("终端处理") == null) {
-//                    controllerSetter.controller.creatWin("终端处理",controllerSetter.controller.getPathHashMap().get("终端处理"));
-//                }else{
-//                    controllerSetter.controller.getWinHashMap().get("终端处理").getStage().toFront();
-//                }
+                if(!terminalWin.isOpen()){
+                    controller.positonI = (++controller.positonI)%controller.position.length;
+                    controller.getCenterPane().getChildren().add(terminalWin.stage);
+                    terminalWin.setTranslate(controller.position[controller.positonI]);
+                    terminalWin.setOpen(true);
+                }else{
+                    terminalWin.getStage().toFront();
+                }
             }
         });
 
@@ -340,7 +336,7 @@ public class Controller{
             }
         });
 
-        /*
+        /**
         **
          * @description: 右键单开菜单的功能，这两段代码耦合度很高，复制粘贴没有做抽取成组件方式调用，功能基本能实现（除了不会终端的打开命令）
          * @param: 鼠标右键就能触发菜单
@@ -348,6 +344,7 @@ public class Controller{
          * @author: Jamkung
          * @date: 2020/10/16 14:13
          */
+
         centerPane.addEventFilter(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

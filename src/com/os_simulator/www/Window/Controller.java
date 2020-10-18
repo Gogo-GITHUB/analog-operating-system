@@ -227,6 +227,7 @@ public class Controller{
          * @date: 2020/10/16 13:07
          * @throws
          */
+        Controller controller=this;
         base.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -234,6 +235,14 @@ public class Controller{
                 if (event.getCode().name().equals(KeyCode.T.getName())){
                     System.out.println("键盘按下了按键=T");
                     System.out.println("打开终端");
+                    if(!terminalWin.isOpen()){
+                        controller.positonI = (++controller.positonI)%controller.position.length;
+                        controller.getCenterPane().getChildren().add(terminalWin.stage);
+                        terminalWin.setTranslate(controller.position[controller.positonI]);
+                        terminalWin.setOpen(true);
+                    }else{
+                        terminalWin.getStage().toFront();
+                    }
                 }else if (event.getCode().name().equals(KeyCode.S.getName())){
                     System.out.println("键盘按下了按键=S");
                     System.out.println("打开设置");
@@ -275,7 +284,7 @@ public class Controller{
         MenuItem nextPic = new MenuItem(" 切换壁纸 ");
         MenuItem closeMyWin = new MenuItem("\t关机\t");//关机按钮
         rightButtonMenu.getItems().addAll(termial,closeMyWin, setting,nextPic);
-        Controller controller=this;
+
         termial.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override

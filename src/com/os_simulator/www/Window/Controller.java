@@ -42,7 +42,7 @@ public class Controller{
     public static SystemCore systemCore = new SystemCore();//激活后台
     private ReentrantLock lock = new ReentrantLock();//资源锁
     private ArrayList<String> appList = new ArrayList<>();//应用名称列表
-    private ArrayList<String> superAppLiat = new ArrayList<>();//后台窗口应用列表
+    private ArrayList<String> superAppList = new ArrayList<>();//后台窗口应用列表
     private HashMap<String,Win> winHashMap = new HashMap<>();//哈希表，存放窗口名称和窗口
     private HashMap<String,String> pathHashMap = new HashMap<>();//存放应用名称和路径
     private CPUWin cpuWin = new CPUWin(this);//创建cpuu状态窗口
@@ -87,13 +87,15 @@ public class Controller{
         winHashMap.put(controllerSetter.getName(),controllerSetter);//存放应用列表窗口
         winHashMap.put(dictionaryWin.getName(),dictionaryWin);
         winHashMap.put(mainMemoryWin.getName(),mainMemoryWin);
+
         winHashMap.put(terminalWin.getName(),terminalWin);
-        superAppLiat.add(cpuWin.getName());
-        superAppLiat.add(mainMemoryWin.getName());
-        superAppLiat.add(diskWin.getName());
-        superAppLiat.add(dictionaryWin.getName());
-        superAppLiat.add(deviceWin.getName());
-        superAppLiat.add(terminalWin.getName());
+
+        superAppList.add(cpuWin.getName());
+        superAppList.add(mainMemoryWin.getName());
+        superAppList.add(diskWin.getName());
+        superAppList.add(dictionaryWin.getName());
+        superAppList.add(deviceWin.getName());
+        superAppList.add(terminalWin.getName());
 
 
         //顶部面板设置；
@@ -145,7 +147,7 @@ public class Controller{
                         "-fx-max-width: 50px; " +
                         "-fx-max-height: 50px;"
         );
-        for (String string:superAppLiat)
+        for (String string:superAppList)
             bottomPane.getChildren().add(((SuperWin)winHashMap.get(string)).getButton());
         bottomPane.getChildren().addAll(appsButton);//添加按钮
         AppPane appPane = new AppPane(this,appList);
@@ -213,16 +215,19 @@ public class Controller{
 
 
 
-        /*
-        **
-         * @description: 【快捷键的设置，T打开终端，Q关闭程序，S打开设置，Z切换壁纸】
+
+        /**
+
+         *@description: 【快捷键的设置，T打开终端，Q关闭程序，S打开设置，Z切换壁纸】
          * 暂时没有优化代码，因此代码耦合度比较高【实现功能第一，优化第二】
-         * 未完成：终端打开未完成，不知道怎么才能创建终端的页面出来
+
          * @param:  按键TQSZ
          * @return:
          * @author: Jamkung
          * @date: 2020/10/16 13:07
+         * @throws
          */
+        Controller controller=this;
         base.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -230,6 +235,14 @@ public class Controller{
                 if (event.getCode().name().equals(KeyCode.T.getName())){
                     System.out.println("键盘按下了按键=T");
                     System.out.println("打开终端");
+                    if(!terminalWin.isOpen()){
+                        controller.positonI = (++controller.positonI)%controller.position.length;
+                        controller.getCenterPane().getChildren().add(terminalWin.stage);
+                        terminalWin.setTranslate(controller.position[controller.positonI]);
+                        terminalWin.setOpen(true);
+                    }else{
+                        terminalWin.getStage().toFront();
+                    }
                 }else if (event.getCode().name().equals(KeyCode.S.getName())){
                     System.out.println("键盘按下了按键=S");
                     System.out.println("打开设置");
@@ -277,18 +290,14 @@ public class Controller{
             @Override
             public void handle(ActionEvent event)
             {
-                System.out.println("不知道怎么打开终端");
-//                controllerSetter.controller.creatWin("终端处理",controllerSetter.controller.getPathHashMap().get("终端处理"));
-//                controllerSetter.controller.getWinHashMap().get("终端处理").getStage().toFront();;
-//                System.out.println("controllerSetter.controller.getWinHashMap().get(\"终端处理\") == null");
-//                System.out.println(controllerSetter.controller.getWinHashMap().get("终端处理"));
-//                System.out.println("controllerSetter.controller.getWinHashMap().get(\"终端处理\").getStage().toFront();");
-
-//                if (controllerSetter.controller.getWinHashMap().get("终端处理") == null) {
-//                    controllerSetter.controller.creatWin("终端处理",controllerSetter.controller.getPathHashMap().get("终端处理"));
-//                }else{
-//                    controllerSetter.controller.getWinHashMap().get("终端处理").getStage().toFront();
-//                }
+                if(!terminalWin.isOpen()){
+                    controller.positonI = (++controller.positonI)%controller.position.length;
+                    controller.getCenterPane().getChildren().add(terminalWin.stage);
+                    terminalWin.setTranslate(controller.position[controller.positonI]);
+                    terminalWin.setOpen(true);
+                }else{
+                    terminalWin.getStage().toFront();
+                }
             }
         });
 
@@ -336,7 +345,7 @@ public class Controller{
             }
         });
 
-        /*
+        /**
         **
          * @description: 右键单开菜单的功能，这两段代码耦合度很高，复制粘贴没有做抽取成组件方式调用，功能基本能实现（除了不会终端的打开命令）
          * @param: 鼠标右键就能触发菜单
@@ -344,6 +353,7 @@ public class Controller{
          * @author: Jamkung
          * @date: 2020/10/16 14:13
          */
+
         centerPane.addEventFilter(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -354,7 +364,7 @@ public class Controller{
                     System.out.println("右键点击");
                     System.out.println("键盘按下了按键=右键" + event.getButton().name());
                     System.out.println("appList");
-                    System.out.println(superAppLiat);
+                    System.out.println(superAppList);
                     rightButtonMenu.show(base, event.getScreenX(), event.getScreenY());
 
                 }else{

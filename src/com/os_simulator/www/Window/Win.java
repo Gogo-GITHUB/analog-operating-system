@@ -44,9 +44,10 @@ public abstract class Win {
         Text winName = new Text("  "+name);//窗口名称
         winName.setTranslateX(0);
         winName.setTranslateY(20);
-        rectangle.setFill(Color.GRAY);//黑带长条设置
+        rectangle.setFill(Color.valueOf("#dddada"));//黑带长条设置
+
         closeButton.setFill(Color.RED);//关闭按键设置
-        winName.setFill(Color.WHITE);//窗口名称设置
+        winName.setFill(Color.BLACK);//窗口名称设置
         topPane.getChildren().addAll(rectangle,closeButton,winName);//添加节点
         scene.setTop(topPane);
 

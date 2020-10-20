@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -40,15 +41,22 @@ public abstract class Win {
         topPane.setMaxSize(width,thickness);
         topPane.setMinSize(width,thickness);
         Rectangle rectangle = new Rectangle(0,0,width,thickness);//黑带长条；
-        Rectangle closeButton = new Rectangle(width-thickness,0,thickness,thickness);//关闭按钮；
+        Circle closeButton = new Circle(thickness,0.5*thickness,0.3*thickness);//关闭按钮；
+        Circle minButton = new Circle(2*thickness,0.5*thickness,0.3*thickness);
+        Circle maxButton = new Circle(3*thickness,0.5*thickness,0.3*thickness);
+
+
         Text winName = new Text("  "+name);//窗口名称
-        winName.setTranslateX(0);
+        winName.setTranslateX(0.4*width);
         winName.setTranslateY(20);
         rectangle.setFill(Color.valueOf("#dddada"));//黑带长条设置
 
         closeButton.setFill(Color.RED);//关闭按键设置
+        minButton.setFill(Color.YELLOW);
+        maxButton.setFill(Color.GREEN);
+
         winName.setFill(Color.BLACK);//窗口名称设置
-        topPane.getChildren().addAll(rectangle,closeButton,winName);//添加节点
+        topPane.getChildren().addAll(rectangle,closeButton,minButton,maxButton,winName);//添加节点
         scene.setTop(topPane);
 
         Canvas canvas = new Canvas(width,height+thickness);//创建画板

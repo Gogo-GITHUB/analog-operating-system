@@ -40,6 +40,9 @@ class FileSamplesGenerator {
         this.fileSystem = fileSystem;
         paths = new LinkedList<>();
     }
+    /**
+     *利用文件代码和自动生成的文件名生成10个文件
+     */
     void generate(){
         char[] rawName = {'0','0','0','.','e'};
         int i;
@@ -52,15 +55,18 @@ class FileSamplesGenerator {
             if (i>=6)
                 dirPath = "/drv";
             fileSystem.createFile(dirPath,fileSystem.dirType);
+
             for (int j=0;j<3;i++,j++){
                 String filePath = dirPath + "/" + fileName;
-                fileSystem.createFile(filePath,fileSystem.fileType);
-                test = fileSystem.writeFile(filePath,codes[i]);
+                fileSystem.createFile(filePath,fileSystem.fileType);//根据生成的文件名创建文件
+                test = fileSystem.writeFile(filePath,codes[i]);//写入文件代码
                 if (!test) System.out.println(fileSystem.getStatus());
-                fileSystem.closeFile(filePath);
-                rawName[2]++;
+                fileSystem.closeFile(filePath);//关闭文件
+
+                rawName[2]++;//下一个文件序号生成
                 fileName = new String(rawName);
-                paths.add(filePath);
+
+                paths.add(filePath);//维护路径链表
                 System.err.println("Created: "+filePath);
             }
         }

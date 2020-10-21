@@ -118,9 +118,9 @@ public class Controller{
         topPane.setMaxHeight(30);
         menuBar.minWidthProperty().bind(topPane.minHeightProperty());
         Menu menu = new Menu("    菜单    ");//菜单按钮
-        MenuItem close = new MenuItem("——关机——");//关机按钮
-        MenuItem setter = new MenuItem("——设置——");
-        MenuItem reset = new MenuItem("—窗口重置—");
+        MenuItem close = new MenuItem("关机");//关机按钮
+        MenuItem setter = new MenuItem("设置");
+        MenuItem reset = new MenuItem("窗口重置");
         menu.getItems().addAll(close,setter,reset);
         menuBar.getMenus().addAll(menu);
         SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -291,11 +291,12 @@ public class Controller{
 
         // 鼠标右键菜单及功能设置
         ContextMenu rightButtonMenu = new ContextMenu();
-        MenuItem termial = new MenuItem("\t终端\t");
-        MenuItem setting = new MenuItem("\t设置\t");
-        MenuItem nextPic = new MenuItem(" 切换壁纸 ");
-        MenuItem closeMyWin = new MenuItem("\t关机\t");//关机按钮
-        rightButtonMenu.getItems().addAll(termial,closeMyWin, setting,nextPic);
+        MenuItem setting = new MenuItem("设置");
+        MenuItem closeMyWin = new MenuItem("关机");//关机按钮
+        MenuItem nextPic = new MenuItem("切换壁纸");
+        MenuItem termial = new MenuItem("打开终端");
+
+        rightButtonMenu.getItems().addAll(setting,closeMyWin,nextPic, termial);
 
         termial.setOnAction(new EventHandler<ActionEvent>()
         {

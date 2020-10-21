@@ -82,7 +82,7 @@ public class TerminalWin extends SuperWin {
                             break;
                         case "system":
                             textArea.setText("");
-                            textArea.setText("课程设计的开发人员：\n=============================\n邓文辉,廖文谦,陈华琳,\n陈健超,杨可安,梁炜健\n=============================\n");
+                            textArea.setText("课程设计的开发人员：\n================\n\t朱勇杰,林明凭\n\t林嘉渝,梁晓嘉\n================\n");
                             break;
 
                     }

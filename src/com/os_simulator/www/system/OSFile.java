@@ -10,8 +10,8 @@ public class OSFile {
     private List<String> commands = new LinkedList<>();
 
     /**
-     * 空文件
-     * 1.为空,返回true; 2.不为空,返回false
+     *判断空文件
+     *@return  1.为空,返回true; 2.不为空,返回false
      */
     public boolean isEnptyFile(){
         if (commands.size() == 0){

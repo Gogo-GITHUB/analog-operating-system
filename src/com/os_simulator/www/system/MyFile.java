@@ -13,12 +13,17 @@ import java.util.List;
 class MyFile {
     private byte[] data;
     private byte[] name;
-    private byte extName;
-    private byte attribute;
-    private byte startingSector;
-    private short length;
+    private byte extName;//扩展名
+    private byte attribute;//属性
+    private byte startingSector;//起始扇区
+    private short length;//长度
     private boolean hasError;
-    private List<MyFile> subFiles;
+    private List<MyFile> subFiles;//子文件夹
+    /**
+     *初始化文件
+     *
+     */
+
     MyFile(){
         this.name = new byte[3];
         Arrays.fill(this.name,(byte)0);
@@ -26,6 +31,11 @@ class MyFile {
         hasError = false;
         subFiles = null;
     }
+    /**
+     *利用attributes初始化各个属性
+     * @param  attributes
+     */
+
     void initialize(byte[] attributes){
         if (attributes.length==8){
             name[0]=attributes[0];
@@ -38,6 +48,12 @@ class MyFile {
         }
         else hasError=true;
     }
+
+    /**
+     *利用attributes和写入的data初始化各个属性
+     * @param  attributes
+     * @param  data
+     */
     void initialize(byte[] attributes,byte[] data){
         if (attributes.length==8){
             name[0]=attributes[0];
@@ -49,11 +65,17 @@ class MyFile {
             length = (short)(attributes[6]+attributes[7]*256);
         }
         else hasError=true;
-        if (!hasError){
+        if (!hasError){//没有出错则将数据写入
             this.data = new byte[this.length];
             this.data = Arrays.copyOf(data,this.length);
         }
     }
+
+
+    /**
+     *利用new_name重新设置名字
+     * @param  new_name
+     */
     public void setName(String new_name){
         boolean split = false;
         char[] name = new_name.toCharArray();
@@ -76,6 +98,11 @@ class MyFile {
             this.name[2]=(byte)name[2];
         }
     }
+    /**
+     *利用字符串更改文件的数据
+     * @param  new_data
+     */
+
     public void setData(String new_data){
         char[] data = new_data.toCharArray();
         int length = new_data.length();
@@ -85,18 +112,31 @@ class MyFile {
         }
         this.length = (short)length;
     }
+
+
+    /**
+     *读取文件的长度
+     */
+
     public void countLength(){
         if (isNormalFile()||isReadOnlyFile()||isSystemFile()){
             length = (short)data.length;
         }
         else length=0;
     }
+
+
     public void setData(byte[] new_data){
         this.data = new_data;
     }
     public void setExtName(char extName){
         this.extName = (byte)extName;
     }
+
+    /**
+     *更改文件的属性
+     * @param  attribute
+     */
     public boolean setAttribute(byte attribute){
         boolean status = false;
         if (isDirectory()) return false;
@@ -135,6 +175,11 @@ class MyFile {
     public byte getAttribute(){
         return attribute;
     }
+
+    /**
+     *返回文件的全部属性
+     * @return 文件全部属性
+     */
     public byte[] getAttributes(){
         byte[] result = new byte[8];
         int i;

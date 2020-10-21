@@ -55,9 +55,9 @@ public class FileSystem {
     private void initialize(){
         int i;
         availableSectors=0;
-        int sectorsForFAT = cpu.getDiskSectorCount()/sectorSize;
+        int sectorsForFAT = cpu.getDiskSectorCount()/sectorSize;//可用盘块
         for (i=0;i<sectorsForFAT;i++){
-            byte[] temp = cpu.readDisk(i);
+            byte[] temp = cpu.readDisk(i);//读取磁盘，写入fat
             for (int j=0;j<sectorSize;j++){
                 FAT[i*sectorSize+j]=temp[j];
                 if (temp[j]!=endCode&&temp[j]!=errorCode) availableSectors++;
@@ -74,8 +74,8 @@ public class FileSystem {
         Arrays.fill(attributes,(byte)0);
         attributes[4] = 0B00001000; //isDirectory
         attributes[5] = (byte)sectorsForFAT; //StartingSector = 4
-        ROOT_DIR.initialize(attributes);
-        parseFile(ROOT_DIR);
+        ROOT_DIR.initialize(attributes);//设置根目录的属性
+        parseFile(ROOT_DIR);//解析根目录
 
         //预生成3个目录、10个可执行文件
         generator.generate();
@@ -91,15 +91,15 @@ public class FileSystem {
         byte emptyRecord[] = new byte[8];
         Arrays.fill(emptyRecord,(byte)0);
         byte sectorCount = 0;
-        if (file.isDirectory()){
+        if (file.isDirectory()){//目录文件
             List<MyFile> subFiles = file.getSubFiles();
             if (subFiles!=null) return;
-            subFiles = new LinkedList<>();
+            subFiles = new LinkedList<>();//获取子目录
             while (hasNext!=endCode
                     &&hasNext!=errorCode){
-                byte[] rawData = cpu.readDisk(hasNext);
+                byte[] rawData = cpu.readDisk(hasNext);//当前盘块数据
                 if (rawData.length==sectorSize){
-                    if (sectorCount==0){
+                    if (sectorCount==0){//第一个盘块
                         data = Arrays.copyOf(rawData,sectorSize);
                     }
                     else {
@@ -110,22 +110,22 @@ public class FileSystem {
                     }
                     sectorCount++;
 
-                    for (int i=0;i<8;i++){
+                    for (int i=0;i<8;i++){//读取下层的子文件
                         byte[] rawRecord = Arrays.copyOfRange(rawData,i*8,(i+1)*8);
-                        if (Arrays.equals(emptyRecord,rawRecord)) break;
+                        if (Arrays.equals(emptyRecord,rawRecord)) break;//空记录退出
                         MyFile new_file = new MyFile();
-                        new_file.initialize(rawRecord);
+                        new_file.initialize(rawRecord);//文件属性设置
                         if (new_file.getErrorStatus()) continue;
                         parseFile(new_file);
                         subFiles.add(new_file);
                     }
                 }
-                hasNext = FAT[hasNext];
+                hasNext = FAT[hasNext];//下一盘块
             }
             file.setSubFiles(subFiles);
-            file.setData(data);
+            file.setData(data);//将从磁盘读取出来的数据，放进去文件对象
         }
-        else if (file.isNormalFile() || file.isReadOnlyFile() || file.isSystemFile()){
+        else if (file.isNormalFile() || file.isReadOnlyFile() || file.isSystemFile()){//普通文件
             while (hasNext!=endCode
                     &&hasNext!=errorCode){
                 byte[] rawData = cpu.readDisk(hasNext);
@@ -136,8 +136,8 @@ public class FileSystem {
                     else {
                         byte[] oldData = data;
                         data = new byte[(sectorCount+1)*sectorSize];
-                        System.arraycopy(oldData,0,data,0,oldData.length);
-                        System.arraycopy(rawData,0,data,sectorCount*sectorSize,sectorSize);
+                        System.arraycopy(oldData,0,data,0,oldData.length);//将原来的盘块放进去data
+                        System.arraycopy(rawData,0,data,sectorCount*sectorSize,sectorSize);//添加新读取的
                     }
                     sectorCount++;
                 }
@@ -154,12 +154,12 @@ public class FileSystem {
      */
     private byte takeAvailableSector(int requiredSpace){
         int emptySpace = availableSectors*sectorSize;
-        if (requiredSpace>emptySpace) {
+        if (requiredSpace>emptySpace) {//空间不够
             status = "Available disk space not enough";
             return endCode;
         }
         byte emptySector = endCode;
-        for (int i=cpu.getDiskSectorCount()/sectorSize+1;i<cpu.getDiskSectorCount()-2;i++){
+        for (int i=cpu.getDiskSectorCount()/sectorSize+1;i<cpu.getDiskSectorCount()-2;i++){//查找空块
             if (FAT[i]==0) {
                 emptySector=(byte)i;
                 availableSectors--;
@@ -185,7 +185,7 @@ public class FileSystem {
                 FAT[currentSector]=0;
                 currentSector = i;
                 availableSectors++;
-            }
+            }//释放盘块
             FAT[currentSector]=0;
             availableSectors++;
         }
@@ -200,7 +200,7 @@ public class FileSystem {
         System.err.println(path);
         String[] pathSplit = path.split("/");
         if (pathSplit.length>1)
-            pathSplit = Arrays.copyOfRange(pathSplit,1,pathSplit.length);
+            pathSplit = Arrays.copyOfRange(pathSplit,1,pathSplit.length);//提取目录
         System.err.println(Arrays.toString(pathSplit));
         return seekPath(ROOT_DIR,pathSplit);
     }
@@ -223,12 +223,13 @@ public class FileSystem {
             byte[] rawName = file.getName();
             char[] rawNameChars = new char[rawName.length];
             for (int j=0;j<rawName.length;j++) rawNameChars[j]=(char)rawName[j];
-            String fileName = new String(rawNameChars);
+            String fileName = new String(rawNameChars);//获取子文件的名字
+
             if (fileName.isEmpty()) return null;
             if (file.isDirectory() && path.length>1 && fileName.equals(path[0])){
                 //目标在子目录中，寻找子目录
                 String[] new_path = Arrays.copyOfRange(path,1,path.length);
-                result = seekPath(file,new_path);
+                result = seekPath(file,new_path);//递归下一级
             }
             if (path.length==1
                     && (file.isDirectory() || file.isNormalFile()
@@ -237,8 +238,8 @@ public class FileSystem {
                 if (file.isNormalFile() || file.isReadOnlyFile() || file.isSystemFile()){
                     //目标是文件
                     char extName = (char)file.getExtName();
-                    String requiredExtName = path[0].substring(path[0].lastIndexOf('.')+1,path[0].length());
-                    String originalExtName = new String(new char[]{extName});
+                    String requiredExtName = path[0].substring(path[0].lastIndexOf('.')+1,path[0].length());//目标后缀
+                    String originalExtName = new String(new char[]{extName});//源后缀
                     if (path[0].contains(fileName) && requiredExtName.equals(originalExtName)){
                         //文件名、扩展名完全匹配
                         result = file;
@@ -263,9 +264,10 @@ public class FileSystem {
                     "FAT.length-i*sectorSize--------  "+(FAT.length-i*sectorSize)+"\n"+
                     "(i+1)*sectorSize----------  "+((i+1)*sectorSize)+"\n");
             int max = ((i+1)*sectorSize)>FAT.length? FAT.length-i*sectorSize: (i+1)*sectorSize;
+            //是否到达末尾，如果到达末尾不需要把整个块写入
 
             byte[] data = Arrays.copyOfRange(FAT,i*sectorSize,max);
-            cpu.writeDisk(data,i);
+            cpu.writeDisk(data,i);//写入磁盘文件
         }
     }
 
@@ -311,7 +313,7 @@ public class FileSystem {
                     }
                 }
             }
-            cpu.writeDisk(buffer,currentSector);
+            cpu.writeDisk(buffer,currentSector);//保存进去磁盘文件
             currentSector = nextSector;
         }
         return status;
@@ -348,7 +350,7 @@ public class FileSystem {
         //若目标是根目录，返回false
         if (depth==0) return false;
         if (depth>1){
-            pathSplit = Arrays.copyOfRange(pathSplit,1,pathSplit.length);
+            pathSplit = Arrays.copyOfRange(pathSplit,1,pathSplit.length);//去掉第一层目录
             depth--;
         }
         System.err.println(Arrays.toString(pathSplit));
@@ -358,7 +360,7 @@ public class FileSystem {
             //逐级寻找目标
             builder.append("/");
             builder.append(path);
-            MyFile currentFileOrDir = getFile(builder.toString());
+            MyFile currentFileOrDir = getFile(builder.toString());//按目录查找文件
             if (currentFileOrDir==null && depth!=1) {
                 //未抵达最后一级，且未发现下一级目录，不予建立
                 status="Target directory not found-1";
@@ -378,11 +380,12 @@ public class FileSystem {
                 int oldCount = subFiles.size();
                 byte[] attributes = new byte[8];
                 //建立文件需要申请新区块，不能申请者，不予建立
-                byte emptySector = takeAvailableSector(sectorSize);
+                byte emptySector = takeAvailableSector(sectorSize);//获取磁盘空间
                 if (emptySector==endCode) return false;
                 attributes[4] = attribute;
                 attributes[5] = emptySector;
-                new_file.initialize(attributes);
+                new_file.initialize(attributes);//设置文件
+
                 if (new_file.isReadOnlyFile()) {
                     //所建立文件是只读的，不予建立
                     status="Read-only file cannot be established";
@@ -390,8 +393,10 @@ public class FileSystem {
                     return false;}
                 if (new_file.isNormalFile() || new_file.isReadOnlyFile() || new_file.isSystemFile()){
                     //目标是文件
+
                     String newName = path.substring(0,path.indexOf('.'));
                     String extName = path.substring(path.lastIndexOf('.')+1,path.length());
+                    //提取文件名
                     System.err.println(newName + " | " + extName);
                     if (newName.length()>3 || extName.length()!=1) {
                         //不允许文件名带有“.”；文件名不超过3个字符；扩展名1个字符
@@ -413,16 +418,19 @@ public class FileSystem {
                     new_file.setSubFiles(new LinkedList<>());
                     new_file.setName(path);
                     new_file.setData(new byte[sectorSize]);
+                    //设置文件夹
                 }
                 //终于可以保存了？（准备工作）
                 subFiles.add(new_file);
                 formerDir.setSubFiles(subFiles);
 
                 int newCount = subFiles.size();
-                byte[] oldRecord = formerDir.getData();
+                byte[] oldRecord = formerDir.getData();//提取旧文件夹的内容
                 byte[] newRecord = new byte[(newCount%8==0)?(newCount/8+1)*64:newCount*8];
                 System.arraycopy(oldRecord,0,newRecord,0,oldCount*8);
                 System.arraycopy(new_file.getAttributes(),0,newRecord,oldCount*8,8);
+                //用新文件的内容对旧文件夹进行更新
+
                 formerDir.setData(newRecord);
                 //实际永久性保存操作
                 System.err.println("OK - Before permanent saving");
@@ -461,8 +469,8 @@ public class FileSystem {
         if (file.isReadOnlyFile()&&toWrite){
             status="Target file is read-only";return false;
         }
-        openedFiles.put(filePath,file);
-        openedStatus.put(filePath,toWrite);
+        openedFiles.put(filePath,file);//加入文件路径和文件的映射
+        openedStatus.put(filePath,toWrite);//加入文件路径状态的映射
         return true;
     }
 
@@ -478,7 +486,7 @@ public class FileSystem {
         MyFile source = null;
         boolean toWrite=true;
         byte[] result;
-        for (String i: openedFiles.keySet()){
+        for (String i: openedFiles.keySet()){//根据路径获取文件对象
             if (filePath.equals(i)){
                 source = openedFiles.get(i);
                 toWrite = openedStatus.get(i);
@@ -529,7 +537,7 @@ public class FileSystem {
         closeFile(filePath);
         List<MyFile> subFiles = source.getSubFiles();
         if (subFiles==null) return null;
-        if (subFiles.size()==0){
+        if (subFiles.size()==0){//没有子目录
             result = new String[]{"null"};
         }
         else {
@@ -577,6 +585,7 @@ public class FileSystem {
             status = "File has been opened in WRITE mode";
             return null;
         }
+
         if (source.isNormalFile()||source.isReadOnlyFile()||source.isSystemFile()){
             //目标为文件，返回长度1、仅包含文件内容的String数组
             byte[] rawData = source.getData();
@@ -639,12 +648,13 @@ public class FileSystem {
         }
         String dirToBeFound = filePath.substring(0,filePath.lastIndexOf("/"));
         MyFile currentDir = getFile(dirToBeFound);
-        List<MyFile> subFiles = currentDir.getSubFiles();
+        List<MyFile> subFiles = currentDir.getSubFiles();//获取父目录和父目录的子目录
         boolean found = false;
         if (target.isNormalFile()||target.isReadOnlyFile()||target.isSystemFile()){
             if (subFiles.contains(target)){
-                byte[] records = currentDir.getData();
-                byte[] recordOfFile = target.getAttributes();
+                byte[] records = currentDir.getData();//当前目录的数据
+                byte[] recordOfFile = target.getAttributes();//目标文件的属性
+
                 for (int i=0;i<records.length;i+=8){
                     byte[] record = Arrays.copyOfRange(records,i,i+8);
                     System.out.println(Arrays.toString(record));
@@ -654,13 +664,13 @@ public class FileSystem {
                         if (records.length>8){
                             if (i>0)
                                 System.arraycopy(records,0,newRecords,0,i);
-                            System.arraycopy(target.getAttributes(),0,newRecords,i,8);
+                            System.arraycopy(target.getAttributes(),0,newRecords,i,8);//复制文件属性
                             i+=8;
                             if (i<records.length)
-                                System.arraycopy(records,i,newRecords,i,records.length-i);
+                                System.arraycopy(records,i,newRecords,i,records.length-i);//复制源文件的内容
                         }
-                        currentDir.setData(newRecords);
-                        if (!saveRecordOfDir(currentDir)) return false;
+                        currentDir.setData(newRecords);//重新设置数据
+                        if (!saveRecordOfDir(currentDir)) return false;//保存
                         found = true;
                         break;
                     }
@@ -796,10 +806,12 @@ public class FileSystem {
             status = "File/Directory has been opened";
             return false;
         }
-
+         //检查文件是否被打开
         String dirToBeFound = filePath.substring(0,filePath.lastIndexOf("/"));
         MyFile target = getFile(filePath);
         MyFile currentDir = getFile(dirToBeFound);
+
+
         if (currentDir==null||target==null){
             status = "File/Directory not found";
             return false;
@@ -816,7 +828,7 @@ public class FileSystem {
             for (int i=0;i<records.length;i+=8){
                 byte[] record = Arrays.copyOfRange(records,i,i+8);
                 System.out.println(Arrays.toString(record));
-                if (Arrays.equals(record,recordOfFile)){
+                if (Arrays.equals(record,recordOfFile)){//匹配文件内容
                     byte[] newRecords = new byte[(records.length>8)?records.length-8:sectorSize];
                     if (records.length>8){
                         if (i>0)
@@ -825,10 +837,10 @@ public class FileSystem {
                             System.arraycopy(records,i+8,newRecords,i,records.length-(i+8));
                     }
                     subFiles.remove(target);
-                    currentDir.setSubFiles(subFiles);
+                    currentDir.setSubFiles(subFiles);//移除删除的子目录
                     currentDir.setData(newRecords);
                     if (!saveRecordOfDir(currentDir)) return false;
-                    freeSector(target.getStartingSector());
+                    freeSector(target.getStartingSector());//释放磁盘空间
                     saveFAT();
                     found = true;
                     break;

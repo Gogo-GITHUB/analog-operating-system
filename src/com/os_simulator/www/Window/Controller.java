@@ -60,21 +60,33 @@ public class Controller{
     private DoubleProperty baseWidth = new SimpleDoubleProperty((int) Toolkit.getDefaultToolkit().getScreenSize().width);//界面宽度
     private DoubleProperty baseHeight = new SimpleDoubleProperty((int)Toolkit.getDefaultToolkit().getScreenSize().height);//界面高度
     private ImageView imageView = new ImageView(new Image("/Background/El Capitan.jpg"));
-    private ImageView imageView1 = new ImageView(new Image("/icons/app.jpg"));
+    private ImageView imageView1 = new ImageView(new Image("/icons/app.png"));
     private boolean isFullScreen = true;//全屏参数
     private Stage primaryStage;//引用主窗口
-
+    ArrayList<String> names=new ArrayList<>();
+    void addname(){
+        names.add("weixin");
+        names.add("qq");
+        names.add("weibo");
+        names.add("itunes");
+        names.add("taobao");
+        names.add("idea");
+        names.add("eclipse");
+        names.add("zhihu");
+        names.add("photoshops");
+        names.add("chrome");
+    }
     public Controller(Stage primaryStage) {
-
-
+        addname();
+        int i=0;
         this.primaryStage = primaryStage;
 
         for (String path:systemCore.getSamplePaths()){
             System.out.println(path);
-            String[] string = path.split("/");
-            String name = string[string.length-1];
+            String name = names.get(i);
             appList.add(name);
             pathHashMap.put(name,path);
+            i++;
         }
 
         //运行更新模块
@@ -148,7 +160,7 @@ public class Controller{
                         "-fx-max-height: 50px;"
         );
         for (String string:superAppList)
-            bottomPane.getChildren().add(((SuperWin)winHashMap.get(string)).getButton());
+        bottomPane.getChildren().add(((SuperWin)winHashMap.get(string)).getButton());
         bottomPane.getChildren().addAll(appsButton);//添加按钮
         AppPane appPane = new AppPane(this,appList);
 
@@ -524,38 +536,38 @@ class AppPane{
     private Controller controller;//引用controller
 
     ArrayList<ImageView> imageviews = new ArrayList<>();
-    private ImageView i1 = new ImageView(new Image("/icons/weixin.jpg"));
-    private ImageView i2 = new ImageView(new Image("/icons/qq.jpg"));
-    private ImageView i3 = new ImageView(new Image("/icons/weibo.jpg"));
-    private ImageView i4 = new ImageView(new Image("/icons/bili.jpg"));
-    private ImageView i5 = new ImageView(new Image("/icons/taobao.jpg"));
-    private ImageView i6 = new ImageView(new Image("/icons/idea.jpg"));
-    private ImageView i7 = new ImageView(new Image("/icons/ec.jpg"));
+    private ImageView i1 = new ImageView(new Image("/icons/weixin.png"));
+    private ImageView i2 = new ImageView(new Image("/icons/qq.png"));
+    private ImageView i3 = new ImageView(new Image("/icons/weibo.png"));
+    private ImageView i4 = new ImageView(new Image("/icons/itunes.png"));
+    private ImageView i5 = new ImageView(new Image("/icons/taobao.png"));
+    private ImageView i6 = new ImageView(new Image("/icons/idea.png"));
+    private ImageView i7 = new ImageView(new Image("/icons/ec.png"));
     private ImageView i8 = new ImageView(new Image("/icons/zhihu.jpg"));
     private ImageView i9 = new ImageView(new Image("/icons/ps.jpg"));
-    private ImageView i10 = new ImageView(new Image("/icons/code.jpg"));
+    private ImageView i10 = new ImageView(new Image("/icons/google.png"));
 
     public void imageviews() {
-        i1.setFitWidth(30);
-        i1.setFitHeight(30);
-        i2.setFitHeight(30);
-        i2.setFitWidth(30);
-        i3.setFitHeight(30);
-        i3.setFitWidth(30);
-        i4.setFitHeight(30);
-        i4.setFitWidth(30);
-        i5.setFitHeight(30);
-        i5.setFitWidth(30);
-        i6.setFitHeight(30);
-        i6.setFitWidth(30);
-        i7.setFitHeight(30);
-        i7.setFitWidth(30);
-        i8.setFitHeight(30);
-        i8.setFitWidth(30);
-        i9.setFitHeight(30);
-        i9.setFitWidth(30);
-        i10.setFitHeight(30);
-        i10.setFitWidth(30);
+        i1.setFitWidth(60);
+        i1.setFitHeight(60);
+        i2.setFitHeight(60);
+        i2.setFitWidth(60);
+        i3.setFitHeight(80);
+        i3.setFitWidth(80);
+        i4.setFitHeight(60);
+        i4.setFitWidth(60);
+        i5.setFitHeight(60);
+        i5.setFitWidth(60);
+        i6.setFitHeight(60);
+        i6.setFitWidth(60);
+        i7.setFitHeight(60);
+        i7.setFitWidth(60);
+        i8.setFitHeight(60);
+        i8.setFitWidth(60);
+        i9.setFitHeight(60);
+        i9.setFitWidth(60);
+        i10.setFitHeight(60);
+        i10.setFitWidth(60);
         imageviews.add(i1);
         imageviews.add(i2);
         imageviews.add(i3);
@@ -597,11 +609,11 @@ class AppPane{
                 }
             });
             button.setStyle(
-                    "-fx-background-radius: 5em; " +
-                            "-fx-min-width: 50px; " +
-                            "-fx-min-height: 50px; " +
-                            "-fx-max-width: 50px; " +
-                            "-fx-max-height: 50px;"
+                    "-fx-background-radius: 10em; " +
+                            "-fx-min-width: 100px; " +
+                            "-fx-min-height: 100px; " +
+                            "-fx-max-width: 100px; " +
+                            "-fx-max-height: 100px;"
             );
             //应用启动按钮事件
             button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
@@ -609,11 +621,11 @@ class AppPane{
                 public void handle(MouseEvent event) {
 //                    button.setMinSize(80,60);
                     button.setStyle(
-                            "-fx-background-radius: 5em; " +
-                                    "-fx-min-width: 70px; " +
-                                    "-fx-min-height: 70px; " +
-                                    "-fx-max-width: 70px; " +
-                                    "-fx-max-height: 70px;"
+                            "-fx-background-radius: 10em; " +
+                                    "-fx-min-width: 120px; " +
+                                    "-fx-min-height: 120px; " +
+                                    "-fx-max-width: 120px; " +
+                                    "-fx-max-height: 120px;"
                     );
                 }
             });
@@ -622,11 +634,11 @@ class AppPane{
                 public void handle(MouseEvent event) {
 //                    button.setMinSize(40,40);
                     button.setStyle(
-                            "-fx-background-radius: 5em; " +
-                                    "-fx-min-width: 50px; " +
-                                    "-fx-min-height: 50px; " +
-                                    "-fx-max-width: 50px; " +
-                                    "-fx-max-height: 50px;"
+                            "-fx-background-radius: 10em; " +
+                                    "-fx-min-width: 100px; " +
+                                    "-fx-min-height: 100px; " +
+                                    "-fx-max-width: 100px; " +
+                                    "-fx-max-height: 100px;"
                     );
                 }
             });

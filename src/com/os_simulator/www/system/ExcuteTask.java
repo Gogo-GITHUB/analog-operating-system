@@ -48,55 +48,6 @@ public class ExcuteTask extends Thread{
         devicesStatusMap.put("PeripheralB", (byte) 0);
         devicesStatusMap.put("PeripheralC", (byte) 0);
 
-//        //********************************************
-//        OSFile osFile1 = new OSFile();
-//        osFile1.addOneLine("10000010");
-//        osFile1.addOneLine("10000010");
-//        osFile1.addOneLine("10000010");
-//        osFile1.addOneLine("10000010");
-//        osFile1.addOneLine("00100000");
-//        osFile1.addOneLine("01000001");
-//        osFile1.addOneLine("01001111");
-//        osFile1.addOneLine("00001001");
-//        osFile1.addOneLine("11000000");
-//
-//        SimulationThread t1 = new SimulationThread(osFile1);
-//
-//        OSFile osFile2 = new OSFile();
-//        osFile2.addOneLine("10000010");
-//        osFile2.addOneLine("10000010");
-//        osFile2.addOneLine("10000010");
-//        osFile2.addOneLine("10000010");
-//        osFile2.addOneLine("00001001");
-//        osFile2.addOneLine("01000001");
-//        osFile2.addOneLine("01001111");
-//        osFile2.addOneLine("00001001");
-//        osFile2.addOneLine("11000000");
-//        SimulationThread t2 = new SimulationThread(osFile2);
-//
-//        OSFile osFile3 = new OSFile();
-//        osFile3.addOneLine("10000010");
-//        osFile3.addOneLine("00001001");
-//        osFile3.addOneLine("01000001");
-//        osFile3.addOneLine("01001111");
-//        osFile3.addOneLine("00001001");
-//        osFile3.addOneLine("11000000");
-//        SimulationThread t3 = new SimulationThread(osFile3);
-//
-//        OSFile osFile4 = new OSFile();
-//        osFile4.addOneLine("10000010");
-//        osFile4.addOneLine("00001001");
-//        osFile4.addOneLine("01000001");
-//        osFile4.addOneLine("01001111");
-//        osFile4.addOneLine("00001001");
-//        osFile4.addOneLine("11000000");
-//        SimulationThread t4 = new SimulationThread(osFile4);
-//
-//        ReadyThreads.add(t1);
-//        ReadyThreads.add(t2);
-//        ReadyThreads.add(t3);
-//        ReadyThreads.add(t4);
-        //********************************************
     }
 
     //运行次数
@@ -118,7 +69,7 @@ public class ExcuteTask extends Thread{
                         SimulationThread thread = ReadyThreads.peek();
                         //当线程ID不为0
                         if (thread.getThreadID() != 0){
-                            execute(ReadyThreads.peek(), ctimes++);
+                            execute(ReadyThreads.peek(), ctimes++);//将就绪队列队头的第一个元素运行
                             if (ctimes > 6)
                                 ctimes = 0;
                         }
@@ -156,7 +107,7 @@ public class ExcuteTask extends Thread{
      */
     private void freeMemory(SimulationThread thread){
         MemoryBlock memoryBlock = null;
-        for (MemoryBlock m : memoryController.getMList()){
+        for (MemoryBlock m : memoryController.getMList()){//遍历内存块，找出线程占用的内存
             if (m.getThreadID() == thread.getThreadID()){
                 System.out.println(">>>>>释放内存: 线程ID"+thread.getThreadID()+"<<<<<");
                 memoryBlock = m;
@@ -188,7 +139,7 @@ public class ExcuteTask extends Thread{
                         //更新设备
                         if (cpu != null)
                             flashDevices();
-                        //检查CPU返回状态
+                        //cpu执行当前指令，检查CPU返回状态
                         char[] ASM = cpu.execute(command);
                         //设置当前线程的x
                         thread.setThreadX(cpu.getX());
@@ -208,7 +159,7 @@ public class ExcuteTask extends Thread{
                             ctimes = 0;
                         }
 
-                        if (ASM[0] == '!'){
+                        if (ASM[0] == '!'){//没有获取到设备，被阻塞了
                             System.err.println(">>>>>>>>>>>>>>>>>>>>设备"+ASM[1]);
                             if (checkDevicesStatus(thread, ASM[1])){
                                 System.err.println("-------------------------->>>>>>>>"+ "线程" +thread.getThreadID() +"加入阻塞队列<<<<<<<<--------------------------");
@@ -248,10 +199,9 @@ public class ExcuteTask extends Thread{
         cpu.refreshPeripheral("PeripheralA");
         cpu.refreshPeripheral("PeripheralB");
         cpu.refreshPeripheral("PeripheralC");
-        //读取硬件
+        //读取硬件，刷新状态
         byte devicesA = cpu.getPeripheralStatus("PeripheralA");
         devicesStatusMap.replace("PeripheralA", devicesA);
-
 
         byte devicesB = cpu.getPeripheralStatus("PeripheralB");
         devicesStatusMap.replace("PeripheralB", devicesB);
@@ -260,7 +210,7 @@ public class ExcuteTask extends Thread{
         devicesStatusMap.replace("PeripheralC", devicesC);
 
 
-        if (devicesA == -1){
+        if (devicesA == -1){//唤醒阻塞队列的进程
             awakeSleepThread("PeripheralA");
         }
         if (devicesB == -1){
@@ -279,13 +229,13 @@ public class ExcuteTask extends Thread{
      */
     private static List<SimulationThread> threads = new ArrayList<>();
     private void awakeSleepThread(final String awakeReason){
-        for (SimulationThread t : BlockThreads){
+        for (SimulationThread t : BlockThreads){//找出对应阻塞原因的线程
             if (t.getBlockReson().equals(awakeReason)){
                 System.err.println("||===========================>> "+t.getThreadID()+"离开阻塞线程 <<===========================||");
                 threads.add(t);
             }
         }
-        for (SimulationThread t: threads){
+        for (SimulationThread t: threads){//将他们移到就绪队列
             ReadyThreads.add(t);
             BlockThreads.remove(t);
         }
@@ -305,7 +255,9 @@ public class ExcuteTask extends Thread{
         if (devicesName == 127){
             //设置游标返回上一条
             thread.setCursorBack();
+            //设置其阻塞原因
             thread.setBlockReson("Peripheral"+devices);
+            //放入阻塞队列
             BlockThreads.add(ReadyThreads.poll());
             //错误打印
 //            System.err.println("-------------------------->>>>>>>>加入阻塞队列<<<<<<<<--------------------------");
@@ -349,6 +301,7 @@ public class ExcuteTask extends Thread{
     public List<Integer> getReadyID(){
         List<Integer> readyList = new ArrayList<>();
         Iterator iterator = ReadyThreads.iterator();
+        //跳过运行那个线程
         if (iterator.hasNext())
             iterator.next();
         while (iterator.hasNext()){
@@ -419,7 +372,7 @@ public class ExcuteTask extends Thread{
         return thread.getBlockReson().equals("Peripheral"+reason);
     }
     /**
-     * 2.遍历就绪队列,返回相应的List====================>>>(隶属于getWaitDevicesList)
+     * 2.遍历阻塞队列,返回相应的List====================>>>(隶属于getWaitDevicesList)
      * @param devicesName
      * @return
      */
@@ -458,14 +411,14 @@ public class ExcuteTask extends Thread{
     public boolean closeApplication(int threadID){
         //标志位,>0表示找到
         int flag = 0;
-        for (SimulationThread t : ReadyThreads){
+        for (SimulationThread t : ReadyThreads){//遍历查找就绪队列
             if (t.getThreadID() == threadID){
                 t.setCloseFlag(true);
                 flag++;
             }
         }
         if (flag == 0){
-            for (SimulationThread t : BlockThreads){
+            for (SimulationThread t : BlockThreads){//遍历查找阻塞队列
                 if (t.getThreadID() == threadID){
                     t.setCloseFlag(true);
                     flag++;

@@ -162,11 +162,12 @@ public class SimulationThread {
     private OSFile getOsFileByPath(FileSystem fileSystem, String filePath){
         OSFile osFile = new OSFile();
         byte[] fileContent = fileSystem.readFile(filePath, 10000);
+        //读取文件的内容
         fileSystem.closeFile(filePath);
         //当文件内容不为空
         if (fileContent.length != 0){
             for (byte num : fileContent){
-                osFile.addOneLine(OSFile.byteToString(num));
+                osFile.addOneLine(OSFile.byteToString(num));//逐行添加命令
             }
         }
         return osFile;

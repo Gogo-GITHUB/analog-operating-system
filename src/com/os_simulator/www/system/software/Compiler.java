@@ -20,7 +20,7 @@ public class Compiler {
 
     //返回null说明编译该行代码出错
     private String dealOneLine(final String oneCommand){
-
+     //处理一行string指令
 
 
         //去除多余的空格
@@ -73,9 +73,9 @@ public class Compiler {
                 //编译错误
                 return null;
             }else {
-                machineCode += ( operation[0] + aim[0] );
+                machineCode += ( operation[0] + aim[0] );//按编译规则生成machineCode
             }
-            int intTmp = Integer.parseInt(tmp[tmp.length - 1]);
+            int intTmp = Integer.parseInt(tmp[tmp.length - 1]);//x=temp tempM<=15
             if (intTmp > 15){
                 return null;
             }else {
@@ -85,14 +85,14 @@ public class Compiler {
                     machineCode += "0";
                 }
                 machineCode += numTmp;
-                return machineCode;
+                return machineCode;//返回机器码
             }
         }
     }
 
     //获取加法命令的机器码
     private String comFromAdd(String commands){
-        String checkresgister = commands.replace(   "++", "");
+        String checkresgister = commands.replace(   "++", "");//目标寄存器
         if (checkresgister.equals(resgister)){
             return operation[1] + aim[0] + "0001";
         }else {
@@ -119,7 +119,7 @@ public class Compiler {
             return null;
         }else {
             machineCode += operation[2];
-            switch (command[1]){
+            switch (command[1]){//选择设备编号
                 case 'A':
                     machineCode += aim[0];
                     break;
@@ -163,12 +163,12 @@ public class Compiler {
 
         if (sourceLine != 0){
             for (int i = 0; i < sourceLine; i++){
-                if (source.getIndexCommand(i).equals("")){
+                if (source.getIndexCommand(i).equals("")){//空行跳过
                     continue;
                 }
-                String tmp = dealOneLine(source.getIndexCommand(i));
+                String tmp = dealOneLine(source.getIndexCommand(i));//编译一行
                 if (tmp != null){
-                    executeOSFile.addOneLine(tmp);
+                    executeOSFile.addOneLine(tmp);//加入OSFile文件
                 }else {
                     return null;
                 }

@@ -4,12 +4,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * 内存空间的管理类
  * Created by geange on 16-11-21.
  */
 public class MemoryController {
 
     private List<MemoryBlock> memoryBlocks = new LinkedList<>();
-
+    /**
+     * 维护一个内存块队列
+     * @param m
+     *
+     */
     public void addNewBlock(MemoryBlock m){
         memoryBlocks.add(m);
     }

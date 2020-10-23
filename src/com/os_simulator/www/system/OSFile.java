@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * 可执行文件
  * Created by geange on 16-11-16.
  */
 public class OSFile {

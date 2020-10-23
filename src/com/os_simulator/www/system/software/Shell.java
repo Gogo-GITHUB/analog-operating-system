@@ -50,7 +50,7 @@ public class Shell {
         String sourceCommand = command;
         command = command.replaceAll(" +", " ");
         String[] commands = command.split(" ");
-        switch (commands[0]){
+        switch (commands[0]){//分析执行的指令
             case "create":
                 return create(commands[1]);
             case "delete":
@@ -275,18 +275,18 @@ public class Shell {
         String[] coms = command.split(" ");
         if (coms.length == 2 || coms.length == 3){
             if (coms.length == 2){
-                String path = coms[1].replace(".s", ".e");
-                String[] content = fileSystem.readFiletoString(coms[1], 1000);
+                String path = coms[1].replace(".s", ".e");//提取路径
+                String[] content = fileSystem.readFiletoString(coms[1], 1000);//读取指令
                 fileSystem.closeFile(coms[1]);
                 System.err.println("log--273");
                 if (content.length != 0){
                     System.err.println("log--275");
                     String COMMAND = content[0];
-                    byte[] nums = compileToByte(COMMAND);
+                    byte[] nums = compileToByte(COMMAND);//将指令编译成byte【】二进制
                     if (nums != null){
                         System.err.println("log--279");
                         createFile(path);
-                        fileSystem.writeFile(path, nums);
+                        fileSystem.writeFile(path, nums);//将byte【】形式的指令写入文件
                         fileSystem.closeFile(path);
                         fileSystem.closeFile(path);
                         return path+"编译文件已经生成";
@@ -314,15 +314,15 @@ public class Shell {
         }else {
 
             for (int i=0; i<source.length; i++){
-                sourceOSFile.addOneLine(source[i]);
+                sourceOSFile.addOneLine(source[i]);//向执行文件加入命令行
             }
-            sourceOSFile = compiler.compileToFile(sourceOSFile);
+            sourceOSFile = compiler.compileToFile(sourceOSFile);//编译一下
             if(sourceOSFile == null){
                 return null;
             }
             int length = sourceOSFile.getLineNum();
             byte[] nums = new byte[length];
-            for (int i=0; i<length; i++){
+            for (int i=0; i<length; i++){//返回指令的二进制模式
                 byte num = compiler.stringToBinary(sourceOSFile.getIndexCommand(i));
                 nums[i] = num;
             }
@@ -357,7 +357,7 @@ public class Shell {
     }
 
     /**
-     *
+     *清处多余的空格
      * @param command
      * @return
      */

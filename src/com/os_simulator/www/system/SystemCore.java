@@ -7,6 +7,7 @@ import com.os_simulator.www.system.software.Shell;
 import java.util.List;
 
 /**
+ * 操作系统的内核
  * Created by geange on 16-11-21.
  */
 public class SystemCore {
@@ -15,9 +16,9 @@ public class SystemCore {
 
     private SystemTime systemTime;
 
-    private ExcuteTask excuteTask;
-    private FileSystem fileSystem;
-    private CPU cpu;
+    private ExcuteTask excuteTask;//进程管理
+    private FileSystem fileSystem;//文件管理
+    private CPU cpu;//cpu管理
     private Shell shell;
 
     public SystemCore(){

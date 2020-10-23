@@ -17,7 +17,7 @@ public class SystemTime extends Thread{
             synchronized (time){
                 long cTime = System.currentTimeMillis();
                 try {
-                    time.setTime();
+                    time.setTime();//时间片加一
 //                    System.out.println("系统时间:"+time.getTime());
                     time.wait(1000 - System.currentTimeMillis() + cTime);
                     time.notify();

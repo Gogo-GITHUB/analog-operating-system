@@ -35,7 +35,9 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setX(0);
         primaryStage.setY(0);
+        primaryStage.setFullScreenExitHint("");
         primaryStage.show();
+
 
         Controller controller = new Controller(primaryStage);;
 

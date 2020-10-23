@@ -49,11 +49,11 @@ public abstract class Win {
         Text winName = new Text("  "+name);//窗口名称
         winName.setTranslateX(0.4*width);
         winName.setTranslateY(20);
-        rectangle.setFill(Color.valueOf("#dddada"));//黑带长条设置
+        rectangle.setFill(Color.valueOf("#D3D3D3"));//黑带长条设置
 
-        closeButton.setFill(Color.RED);//关闭按键设置
-        minButton.setFill(Color.YELLOW);
-        maxButton.setFill(Color.GREEN);
+        closeButton.setFill(Color.valueOf("#EE6B65"));//关闭按键设置
+        minButton.setFill(Color.valueOf("#FCBE53"));
+        maxButton.setFill(Color.valueOf("#68C25B"));
 
         winName.setFill(Color.BLACK);//窗口名称设置
         topPane.getChildren().addAll(rectangle,closeButton,minButton,maxButton,winName);//添加节点

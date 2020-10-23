@@ -112,6 +112,7 @@ public class Controller{
 
         //顶部面板设置；
         StackPane topPane = new StackPane();
+        topPane.setStyle("-fx-background-color:#D3D3D3");
         topPane.minWidthProperty().bind(baseWidth);//属性绑定
         topPane.maxWidthProperty().bind(baseWidth);
         topPane.setMinHeight(30);

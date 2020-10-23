@@ -292,10 +292,10 @@ public class Controller{
 
         // 鼠标右键菜单及功能设置
         ContextMenu rightButtonMenu = new ContextMenu();
-        MenuItem setting = new MenuItem("设置");
-        MenuItem closeMyWin = new MenuItem("关机");//关机按钮
-        MenuItem nextPic = new MenuItem("切换壁纸");
-        MenuItem termial = new MenuItem("打开终端");
+        MenuItem setting = new MenuItem("设置(S)");
+        MenuItem closeMyWin = new MenuItem("关机(Q)");//关机按钮
+        MenuItem nextPic = new MenuItem("切换壁纸(Z)");
+        MenuItem termial = new MenuItem("打开终端(T)");
 
         rightButtonMenu.getItems().addAll(setting,closeMyWin,nextPic, termial);
 

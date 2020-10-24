@@ -83,7 +83,7 @@ public class Controller{
 
         for (String path:systemCore.getSamplePaths()){
             System.out.println(path);
-            String name = names.get(i);
+            String name =names.get(i);
             appList.add(name);
             pathHashMap.put(name,path);
             i++;
@@ -144,8 +144,8 @@ public class Controller{
         bottomPane.setAlignment(Pos.CENTER);//节点居中
         bottomPane.minWidthProperty().bind(baseWidth);//属性绑定
         bottomPane.maxWidthProperty().bind(baseWidth);
-        bottomPane.setMinHeight(40);
-        bottomPane.setMaxHeight(40);
+        bottomPane.setMinHeight(0);
+        bottomPane.setMaxHeight(0);
 
         Button appsButton = new Button("应用列表");//创建应用列表窗口快捷键
         appsButton.setText("");
@@ -155,10 +155,10 @@ public class Controller{
         appsButton.setMinSize(80,30);
         appsButton.setStyle(
                 "-fx-background-radius: 5em; " +
-                        "-fx-min-width: 50px; " +
-                        "-fx-min-height: 50px; " +
-                        "-fx-max-width: 50px; " +
-                        "-fx-max-height: 50px;"
+                        "-fx-min-width: 100px; " +
+                        "-fx-min-height: 100px; " +
+                        "-fx-max-width: 100px; " +
+                        "-fx-max-height: 100px;"
         );
         for (String string:superAppList)
         bottomPane.getChildren().add(((SuperWin)winHashMap.get(string)).getButton());
@@ -168,8 +168,8 @@ public class Controller{
         //中间面板设置；
         centerPane.minWidthProperty().bind(baseWidth);//属性绑定
         centerPane.maxWidthProperty().bind(baseWidth);
-        centerPane.minHeightProperty().bind(baseHeight.subtract(70));
-        centerPane.maxHeightProperty().bind(baseHeight.subtract(70));
+        centerPane.minHeightProperty().bind(baseHeight.subtract(80));
+        centerPane.maxHeightProperty().bind(baseHeight.subtract(80));
 
         //主要面板设置；
         BorderPane pane = new BorderPane();//创建面板
@@ -409,10 +409,10 @@ public class Controller{
                 if(!appPane.isOpen()){
                     appsButton.setStyle(
                             "-fx-background-radius: 5em; " +
-                                    "-fx-min-width: 70px; " +
-                                    "-fx-min-height: 70px; " +
-                                    "-fx-max-width: 70px; " +
-                                    "-fx-max-height: 70px;"
+                                    "-fx-min-width: 120px; " +
+                                    "-fx-min-height: 120px; " +
+                                    "-fx-max-width: 120px; " +
+                                    "-fx-max-height: 120px;"
                     );
                 }
 //                appsButton.setTranslateY(appsButton.getTranslateY()-5);
@@ -424,10 +424,10 @@ public class Controller{
                 if(!appPane.isOpen()){
                     appsButton.setStyle(
                             "-fx-background-radius: 5em; " +
-                                    "-fx-min-width: 50px; " +
-                                    "-fx-min-height: 50px; " +
-                                    "-fx-max-width: 50px; " +
-                                    "-fx-max-height: 50px;"
+                                    "-fx-min-width: 100px; " +
+                                    "-fx-min-height: 100px; " +
+                                    "-fx-max-width: 100px; " +
+                                    "-fx-max-height: 100px;"
                     );
                 }
 //                appsButton.setTranslateY(appsButton.getTranslateY()+5);
@@ -457,7 +457,7 @@ public class Controller{
         }finally {
             FileWin win = new FileWin(this,name,id);
             this.getCenterPane().getChildren().add(win.getStage());
-            this.getWinHashMap().put(win.getName(), win);
+            this.getWinHashMap().put(name, win);
             positonI = (++positonI) % position.length;
             win.setTranslate(position[positonI]);
         }
@@ -536,7 +536,7 @@ class AppPane{
     private StackPane stage = new StackPane();
     private HBox scene = new HBox(5);
     private Controller controller;//引用controller
-
+    int i=0;
     ArrayList<ImageView> imageviews = new ArrayList<>();
     private ImageView i1 = new ImageView(new Image("/icons/weixin.png"));
     private ImageView i2 = new ImageView(new Image("/icons/qq.png"));
@@ -583,19 +583,18 @@ class AppPane{
     }
 
     public AppPane(Controller controller, ArrayList<String> appList){
-        int i=0;
         this.controller = controller;
-        stage.translateYProperty().bind(controller.baseHeightProperty().subtract(160));//属性绑定
+        stage.translateYProperty().bind(controller.baseHeightProperty().subtract(190));//属性绑定
         stage.minWidthProperty().bind(controller.baseWidthProperty());
         stage.maxWidthProperty().bind(controller.baseWidthProperty());
-        stage.setMinHeight(60);
-        stage.setMaxHeight(60);
+        stage.setMinHeight(0);
+        stage.setMaxHeight(0);
         scene.setAlignment(Pos.CENTER);
         stage.getChildren().add(scene);
         imageviews();
         //对应用注册表内全部应用创建应用启动按钮
         for (String app:appList){
-            Button button = new Button(app);
+            Button button = new Button(" ");
             button.setGraphic(imageviews.get(i));
             button.setMinSize(40,40);
             i++;
@@ -604,7 +603,7 @@ class AppPane{
                 @Override
                 public void handle(ActionEvent event) {
                     if (controller.getWinHashMap().get(app) == null) {
-                        controller.creatWin(app,controller.getPathHashMap().get(app));
+                        controller.creatWin(app, controller.getPathHashMap().get(app));
                     }else{
                         controller.getWinHashMap().get(app).getStage().toFront();
                     }

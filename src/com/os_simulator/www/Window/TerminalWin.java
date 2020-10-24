@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -51,8 +52,46 @@ public class TerminalWin extends SuperWin {
         textField.setStyle("-fx-text-fill:white");
         textField.setStyle("-fx-control-inner-background: black;");
         button.setText("");
+        imageView.setFitHeight(70);
+        imageView.setFitWidth(70);
         button.setGraphic(imageView);
-
+        button.setStyle(
+                "-fx-background-radius: 10em; " +
+                        "-fx-min-width: 100px; " +
+                        "-fx-min-height: 100px; " +
+                        "-fx-max-width: 100px; " +
+                        "-fx-max-height: 100px;"
+        );
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                {
+                    button.setStyle(
+                            "-fx-background-radius: 5em; " +
+                                    "-fx-min-width: 120px; " +
+                                    "-fx-min-height: 120px; " +
+                                    "-fx-max-width: 120px; " +
+                                    "-fx-max-height: 120px;"
+                    );
+                }
+//                appsButton.setTranslateY(appsButton.getTranslateY()-5);
+            }
+        });
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                {
+                    button.setStyle(
+                            "-fx-background-radius: 5em; " +
+                                    "-fx-min-width: 100px; " +
+                                    "-fx-min-height: 100px; " +
+                                    "-fx-max-width: 100px; " +
+                                    "-fx-max-height: 100px;"
+                    );
+                }
+//                appsButton.setTranslateY(appsButton.getTranslateY()+5);
+            }
+        });
         pane.getChildren().addAll(textArea, textField);
         setPane(pane);
 

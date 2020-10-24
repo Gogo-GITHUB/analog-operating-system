@@ -3,6 +3,7 @@ package com.os_simulator.www.Window;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
@@ -62,9 +63,47 @@ public class DiskWin extends SuperWin{
             flowPane.getChildren().add(r);
         }
 
+        imageView.setFitHeight(70);
+        imageView.setFitWidth(70);
         button.setGraphic(imageView);
+        button.setStyle(
+                "-fx-background-radius: 10em; " +
+                        "-fx-min-width: 100px; " +
+                        "-fx-min-height: 100px; " +
+                        "-fx-max-width: 100px; " +
+                        "-fx-max-height: 100px;"
+        );
         button.setText("");
-
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                {
+                    button.setStyle(
+                            "-fx-background-radius: 5em; " +
+                                    "-fx-min-width: 120px; " +
+                                    "-fx-min-height: 120px; " +
+                                    "-fx-max-width: 120px; " +
+                                    "-fx-max-height: 120px;"
+                    );
+                }
+//                appsButton.setTranslateY(appsButton.getTranslateY()-5);
+            }
+        });
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                {
+                    button.setStyle(
+                            "-fx-background-radius: 5em; " +
+                                    "-fx-min-width: 100px; " +
+                                    "-fx-min-height: 100px; " +
+                                    "-fx-max-width: 100px; " +
+                                    "-fx-max-height: 100px;"
+                    );
+                }
+//                appsButton.setTranslateY(appsButton.getTranslateY()+5);
+            }
+        });
 
         pane.setPadding(new Insets(PANDING, PANDING+5, PANDING, PANDING));
         setPane(pane);

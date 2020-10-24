@@ -4,11 +4,13 @@ import com.os_simulator.www.system.MemoryBlock;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -51,8 +53,46 @@ public class CPUWin extends SuperWin{
         textField3.setMaxSize(100,20);
         textField4.setEditable(false);
         textField4.setMaxSize(100,20);
-
+        imageView.setFitHeight(70);
+        imageView.setFitWidth(70);
         button.setGraphic(imageView);
+        button.setStyle(
+                "-fx-background-radius: 10em; " +
+                        "-fx-min-width: 100px; " +
+                        "-fx-min-height: 100px; " +
+                        "-fx-max-width: 100px; " +
+                        "-fx-max-height: 100px;"
+        );
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                {
+                    button.setStyle(
+                            "-fx-background-radius: 5em; " +
+                                    "-fx-min-width: 120px; " +
+                                    "-fx-min-height: 120px; " +
+                                    "-fx-max-width: 120px; " +
+                                    "-fx-max-height: 120px;"
+                    );
+                }
+//                appsButton.setTranslateY(appsButton.getTranslateY()-5);
+            }
+        });
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                {
+                    button.setStyle(
+                            "-fx-background-radius: 5em; " +
+                                    "-fx-min-width: 100px; " +
+                                    "-fx-min-height: 100px; " +
+                                    "-fx-max-width: 100px; " +
+                                    "-fx-max-height: 100px;"
+                    );
+                }
+//                appsButton.setTranslateY(appsButton.getTranslateY()+5);
+            }
+        });
         button.setText("");
 
         leftPane.getChildren().addAll(text1,textField1,text2,textField2,text3,textField3,text4,textField4);//添加节点

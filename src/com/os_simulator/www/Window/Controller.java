@@ -149,8 +149,8 @@ public class Controller{
 
         Button appsButton = new Button("应用列表");//创建应用列表窗口快捷键
         appsButton.setText("");
-        imageView1.setFitHeight(30);
-        imageView1.setFitWidth(30);
+        imageView1.setFitHeight(70);
+        imageView1.setFitWidth(70);
         appsButton.setGraphic(imageView1);
         appsButton.setMinSize(80,30);
         appsButton.setStyle(

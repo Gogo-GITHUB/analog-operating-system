@@ -90,6 +90,13 @@ public abstract class Win {
         });
 
         //关闭按钮设置
+
+        maxButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                controller.closeWin(name);
+            }
+        });
         closeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

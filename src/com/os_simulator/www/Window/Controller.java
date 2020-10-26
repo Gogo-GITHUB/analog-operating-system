@@ -40,6 +40,10 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Controller{
 
     public static SystemCore systemCore = new SystemCore();//激活后台
+
+
+    public static boolean dark=false;
+
     private ReentrantLock lock = new ReentrantLock();//资源锁
     private ArrayList<String> appList = new ArrayList<>();//应用名称列表
     private ArrayList<String> superAppList = new ArrayList<>();//后台窗口应用列表
@@ -112,29 +116,50 @@ public class Controller{
 
         //顶部面板设置；
         StackPane topPane = new StackPane();
-        topPane.setStyle("-fx-background-color:#D3D3D3");
+        topPane.setStyle("-fx-background-color: #D3D3D3");
         topPane.minWidthProperty().bind(baseWidth);//属性绑定
         topPane.maxWidthProperty().bind(baseWidth);
         topPane.setMinHeight(30);
         topPane.setMaxHeight(30);
+
         menuBar.minWidthProperty().bind(topPane.minHeightProperty());
         Menu menu = new Menu("    菜单    ");//菜单按钮
+        menu.setStyle("-fx-text-fill:white");
         MenuItem close = new MenuItem("关机");//关机按钮
         MenuItem setter = new MenuItem("设置");
         MenuItem reset = new MenuItem("窗口重置");
-        menu.getItems().addAll(close,setter,reset);
+        MenuItem dark=new MenuItem("暗夜模式");
+
+        menu.getItems().addAll(close,setter,reset,dark);
         menuBar.getMenus().addAll(menu);
         SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         Text timeText = new Text();//当前时间文本
+        Controller controller=this;
         Thread runningTime = new Thread(){//内部类线程，不停获取当前时间
             @Override
             public void run() {
                 while(true)
+                {
                     timeText.setText(time.format(new Date()));
+                     if (Controller.dark)
+                     {
+                         menuBar.setStyle("-fx-background-color: #1C1D22");
+                         controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
+                         timeText.setFill(Color.WHITE);
+                     }
+                     else{
+                    menuBar.setStyle("-fx-background-color: white");
+                    controller.getImageView().setImage(new Image("/Background/El Capitan.jpg"));
+                    timeText.setFill(Color.BLACK);
+                }
+
+                }
             }
         };//获取当前时间的线程；
         runningTime.start();//线程运行
         timeText.setFont(Font.font(15));//时间文本字体
+
+
         topPane.getChildren().addAll(menuBar,timeText);
 
 
@@ -225,6 +250,15 @@ public class Controller{
             }
         });
 
+        dark.setOnAction(new EventHandler<ActionEvent>() {
+
+
+            @Override
+            public void handle(ActionEvent event) {
+                Controller.dark=!Controller.dark;
+
+            }
+        });
 
 
 
@@ -240,7 +274,7 @@ public class Controller{
          * @date: 2020/10/16 13:07
          * @throws
          */
-        Controller controller=this;
+
         base.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -461,6 +495,15 @@ public class Controller{
             positonI = (++positonI) % position.length;
             win.setTranslate(position[positonI]);
         }
+    }
+
+
+    public static boolean isDark() {
+        return dark;
+    }
+
+    public static void setDark(boolean dark) {
+        Controller.dark = dark;
     }
 
     public Pane getBase() {

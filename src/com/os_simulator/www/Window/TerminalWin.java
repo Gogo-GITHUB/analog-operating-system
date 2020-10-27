@@ -18,13 +18,13 @@ import java.util.Stack;
  * Created by Sean on 2016/12/4.
  */
 public class TerminalWin extends SuperWin {
-    
+
     private List<String> history = new ArrayList<>();
 //    private Stack<String> history = new Stack<>();
 
     private Image image = new Image("/icons/terminal.png");
     private ImageView imageView = new ImageView(image);
-    
+
 
     String command;
     String string2;
@@ -32,7 +32,7 @@ public class TerminalWin extends SuperWin {
     int time = 0;
 
     public TerminalWin(Controller controller){
-        
+
         super(controller, "终端处理", 600, 450);
 
         VBox pane = new VBox();
@@ -40,12 +40,12 @@ public class TerminalWin extends SuperWin {
         TextArea textArea = new TextArea();
         textArea.setMaxSize(600,420);
         textArea.setMinSize(600,420);
-         textArea.setStyle("-fx-text-fill:white");
-         textArea.setStyle("-fx-control-inner-background: black;");
+        textArea.setStyle("-fx-text-fill:white");
+        textArea.setStyle("-fx-control-inner-background: black;");
         /*textArea.setStyle("-fx-text-fill: rgba(0, 0, 0, 0.64);");*/
         textArea.setEditable(false);
 
-        TextField textField = new TextField();
+        TextField textField = new TextField("Peters-MacBook-Pro:");
         textField.setMaxSize(600,30);
         textField.setMinSize(600,30);
 
@@ -100,16 +100,16 @@ public class TerminalWin extends SuperWin {
             public void handle(javafx.scene.input.KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER){
                     time = 1;
-                    command = textField.getText();
+                    command = textField.getText().substring(19);
                     history.add(command);
-                    textField.clear();
+                    textField.setText("Peters-MacBook-Pro:");
                     string2 = systemCore.executeShellCommand(command);
                     if (command == "" && command == null){
 //                        string2 = "指令错误";
                     }else {
                         controller.getWinHashMap().get("磁盘目录").setUpdate(true);
                     }
-                    textArea.appendText("Shell->"+command+"\nShell->"+string2+"\n");
+                    textArea.appendText("Peters-MacBook-Pro:"+command+"\nPeters-MacBook-Pro:"+string2+"\n");
                     controller.getWinHashMap().get("磁盘状态").setUpdate(true);
 
                     switch (command){

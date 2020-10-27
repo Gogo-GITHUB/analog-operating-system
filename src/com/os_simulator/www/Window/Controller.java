@@ -139,7 +139,7 @@ public class Controller{
         Menu finder_menu = new Menu("访达");
         Menu apple_menu = new Menu();
         apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
-        //fffds
+        //fffjj
 
         menu.getItems().addAll(close,setter,reset,dark);
 

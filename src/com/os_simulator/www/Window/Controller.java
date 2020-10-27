@@ -130,9 +130,26 @@ public class Controller{
         MenuItem reset = new MenuItem("窗口重置");
         MenuItem dark=new MenuItem("暗夜模式");
 
+        Menu help_menu = new Menu( "帮助");
+        Menu window_menu = new Menu("窗口");
+        Menu goTo_menu = new Menu("前往");
+        Menu show_menu = new Menu("显示");
+        Menu edit_menu = new Menu("编辑");
+        Menu file_menu = new Menu("文件");
+        Menu finder_menu = new Menu("访达");
+        Menu apple_menu = new Menu();
+        apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
+
+
         menu.getItems().addAll(close,setter,reset,dark);
-        menuBar.getMenus().addAll(menu);
+
+        //menuBar.getMenus().addAll(menu);
+
+        menuBar.getMenus().addAll(apple_menu,menu,finder_menu,file_menu,edit_menu,show_menu,goTo_menu,window_menu,help_menu);
+
         SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        //SimpleDateFormat time = new SimpleDateFormat("E HH:mm");
+
         Text timeText = new Text();//当前时间文本
         Controller controller=this;
         Thread runningTime = new Thread(){//内部类线程，不停获取当前时间
@@ -159,9 +176,24 @@ public class Controller{
         runningTime.start();//线程运行
         timeText.setFont(Font.font(15));//时间文本字体
 
+        Image wifi_image = new Image("/icons/wifi2_1.png",25,25,false,false);
+        ImageView wifi_imageView =  new ImageView(wifi_image);
+        Image sougou_image = new Image("/icons/sougou_4.png",30,30,false,false);
+        ImageView sougou_imageView = new ImageView(sougou_image);
+        Image dianliang_image = new Image("/icons/dianliang_2.png.",30,30,false,false);
+        ImageView dianliang_imageView = new ImageView(dianliang_image);
+        Image fangdajing_image = new Image("/icons/fangdajing_1.png.",30,30,false,false);
+        ImageView fangdajing_imageView = new ImageView(fangdajing_image);
 
-        topPane.getChildren().addAll(menuBar,timeText);
+        HBox work_box =  new HBox();
+        work_box.setMinWidth(30);
+        work_box.getChildren().addAll(timeText,sougou_imageView,wifi_imageView,dianliang_imageView,fangdajing_imageView);
+        work_box.setAlignment(Pos.CENTER_RIGHT);
+        //work_box.setMargin(dianliang_imageView,new Insets(20));
+        work_box.setSpacing(15);
 
+        //topPane.getChildren().addAll(menuBar,timeText);
+        topPane.getChildren().addAll(menuBar,work_box);
 
 
         //底部面板设置；

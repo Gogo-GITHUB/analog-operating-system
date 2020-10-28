@@ -45,7 +45,14 @@ public class TerminalWin extends SuperWin {
         /*textArea.setStyle("-fx-text-fill: rgba(0, 0, 0, 0.64);");*/
         textArea.setEditable(false);
 
-        TextField textField = new TextField("Peters-MacBook-Pro:");
+//        TextArea textArea1 = new TextArea("Peters-MacBook-Pro1:");
+//        textArea1.setMaxSize(150,30);
+//        textArea1.setMinSize(150,30);
+//        textArea1.setStyle("-fx-text-fill:white");
+//        textArea1.setStyle("-fx-control-inner-background: black;");
+//        textArea1.setEditable(false);
+
+        TextField textField = new TextField("Peters-MacBook-Pro2:");
         textField.setMaxSize(600,30);
         textField.setMinSize(600,30);
 
@@ -92,7 +99,7 @@ public class TerminalWin extends SuperWin {
 //                appsButton.setTranslateY(appsButton.getTranslateY()+5);
             }
         });
-        pane.getChildren().addAll(textArea, textField);
+        pane.getChildren().addAll(textArea ,textField);
         setPane(pane);
 
         textField.setOnKeyReleased(new EventHandler<javafx.scene.input.KeyEvent>() {
@@ -103,6 +110,7 @@ public class TerminalWin extends SuperWin {
                     command = textField.getText().substring(19);
                     history.add(command);
                     textField.setText("Peters-MacBook-Pro:");
+                    textField.positionCaret(19);
                     string2 = systemCore.executeShellCommand(command);
                     if (command == "" && command == null){
 //                        string2 = "指令错误";

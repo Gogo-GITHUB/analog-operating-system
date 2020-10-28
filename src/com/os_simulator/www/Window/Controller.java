@@ -168,9 +168,9 @@ public class Controller{
         ImageView wifi_imageView =  new ImageView(wifi_image);
         Image sougou_image = new Image("/icons/sougou_4.png",30,30,false,false);
         ImageView sougou_imageView = new ImageView(sougou_image);
-        Image dianliang_image = new Image("/icons/dianliang_2.png.",30,30,false,false);
+        Image dianliang_image = new Image("/icons/dianliang_2.png",30,30,false,false);
         ImageView dianliang_imageView = new ImageView(dianliang_image);
-        Image fangdajing_image = new Image("/icons/fangdajing_1.png.",30,30,false,false);
+        Image fangdajing_image = new Image("/icons/fangdajing_1.png",30,30,false,false);
         ImageView fangdajing_imageView = new ImageView(fangdajing_image);
 
         HBox work_box =  new HBox();

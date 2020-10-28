@@ -28,8 +28,8 @@ public abstract class Win {
     protected SystemCore systemCore;//应用后台
     protected BorderPane scene = new BorderPane();//模拟scene
     protected StackPane stage = new StackPane();//模拟stage
-
-
+    public   Rectangle rectangle;
+    public   Text winName;
 
     public Win(Controller controller, String name, int width, int height){
 
@@ -40,22 +40,24 @@ public abstract class Win {
         Pane topPane = new Pane();//窗口顶部
         topPane.setMaxSize(width,thickness);
         topPane.setMinSize(width,thickness);
-        Rectangle rectangle = new Rectangle(0,0,width,thickness);//黑带长条；
+        rectangle = new Rectangle(0,0,width,thickness);//黑带长条；
         Circle closeButton = new Circle(thickness,0.5*thickness,0.3*thickness);//关闭按钮；
         Circle minButton = new Circle(2*thickness,0.5*thickness,0.3*thickness);
         Circle maxButton = new Circle(3*thickness,0.5*thickness,0.3*thickness);
 
 
-        Text winName = new Text("  "+name);//窗口名称
+        winName = new Text("  "+name);//窗口名称
         winName.setTranslateX(0.4*width);
         winName.setTranslateY(20);
-        if(Controller.dark==true)
+        if(Controller.dark)
         {
             rectangle.setFill(Color.valueOf("#4A4644"));//黑带长条设置
             winName.setFill(Color.WHITE);//窗口名称设置
+
         }else {
             rectangle.setFill(Color.valueOf("#D3D3D3"));//黑带长条设置
             winName.setFill(Color.BLACK);//窗口名称设置
+
         }
 
 

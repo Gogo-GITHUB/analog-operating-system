@@ -103,7 +103,6 @@ public class Controller{
         winHashMap.put(controllerSetter.getName(),controllerSetter);//存放应用列表窗口
         winHashMap.put(dictionaryWin.getName(),dictionaryWin);
         winHashMap.put(mainMemoryWin.getName(),mainMemoryWin);
-
         winHashMap.put(terminalWin.getName(),terminalWin);
 
         superAppList.add(cpuWin.getName());
@@ -129,7 +128,7 @@ public class Controller{
         MenuItem setter = new MenuItem("设置");
         MenuItem reset = new MenuItem("窗口重置");
         MenuItem dark=new MenuItem("暗夜模式");
-
+        MenuItem test=new MenuItem("xx");
         Menu help_menu = new Menu( "帮助");
         Menu window_menu = new Menu("窗口");
         Menu goTo_menu = new Menu("前往");
@@ -140,7 +139,7 @@ public class Controller{
         Menu apple_menu = new Menu();
         apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
         //fffjj
-
+         apple_menu.getItems().add(test);
         menu.getItems().addAll(close,setter,reset,dark);
 
         //menuBar.getMenus().addAll(menu);
@@ -158,17 +157,6 @@ public class Controller{
                 while(true)
                 {
                     timeText.setText(time.format(new Date()));
-                     if (Controller.dark)
-                     {
-                         menuBar.setStyle("-fx-background-color: #1C1D22");
-                         controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
-                         timeText.setFill(Color.WHITE);
-                     }
-                     else{
-                    menuBar.setStyle("-fx-background-color: white");
-                    controller.getImageView().setImage(new Image("/Background/El Capitan.jpg"));
-                    timeText.setFill(Color.BLACK);
-                }
 
                 }
             }
@@ -193,7 +181,7 @@ public class Controller{
         work_box.setSpacing(15);
 
         //topPane.getChildren().addAll(menuBar,timeText);
-        topPane.getChildren().addAll(menuBar,work_box);
+        topPane.getChildren().addAll(menuBar,timeText);
 
 
         //底部面板设置；
@@ -289,9 +277,33 @@ public class Controller{
             public void handle(ActionEvent event) {
                 Controller.dark=!Controller.dark;
 
+                if (Controller.dark)
+                {
+                    menuBar.setStyle("-fx-background-color: #1C1D22");
+                    controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
+                    timeText.setFill(Color.WHITE);
+
+                    for(String s:superAppList)
+                    {
+                        winHashMap.get(s).rectangle.setFill(Color.valueOf("#4A4644"));//黑带长条设置
+                        winHashMap.get(s).winName.setFill(Color.WHITE);//窗口名称设置
+                    }
+                }
+                else{
+                    menuBar.setStyle("-fx-background-color: white");
+                    controller.getImageView().setImage(new Image("/Background/El Capitan.jpg"));
+                    timeText.setFill(Color.BLACK);
+                    for(String s:superAppList)
+                    {
+                        winHashMap.get(s).rectangle.setFill(Color.valueOf("#D3D3D3"));//黑带长条设置
+                        winHashMap.get(s).winName.setFill(Color.BLACK);//窗口名称设置
+
+                    }
+
+                }
+
             }
         });
-
 
 
 
@@ -602,6 +614,9 @@ public class Controller{
         return lock;
     }
 
+    public ArrayList<String> getAppList() {
+        return appList;
+    }
 }
 
 

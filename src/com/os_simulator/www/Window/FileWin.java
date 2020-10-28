@@ -23,6 +23,8 @@ public class FileWin extends Win{
         textArea.setMinSize(380,250);
         textArea.setMaxSize(380,250);
         textArea.setEditable(false);
+
+
         pane.getChildren().add(textArea);
         this.setPane(pane);
 

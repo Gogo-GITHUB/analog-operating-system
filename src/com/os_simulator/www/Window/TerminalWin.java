@@ -52,7 +52,8 @@ public class TerminalWin extends SuperWin {
 //        textArea1.setStyle("-fx-control-inner-background: black;");
 //        textArea1.setEditable(false);
 
-        TextField textField = new TextField("Peters-MacBook-Pro2:");
+        TextField textField = new TextField();
+        textField.setText("Peters-MacBook-Pro:");
         textField.setMaxSize(600,30);
         textField.setMinSize(600,30);
 
@@ -129,7 +130,7 @@ public class TerminalWin extends SuperWin {
                             break;
                         case "system":
                             textArea.setText("");
-                            textArea.setText("课程设计的开发人员：\n================\n\t朱勇杰,林明凭\n\t林嘉渝,梁晓嘉\n================\n");
+                            textArea.setText("课程设计的开发人员：\n================\n\t朱勇杰,林明凭\n\t林嘉渝,梁晓嘉\n\t彭志凯\n================\n");
                             break;
 
                     }

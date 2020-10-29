@@ -105,6 +105,8 @@ public class Controller{
         winHashMap.put(mainMemoryWin.getName(),mainMemoryWin);
         winHashMap.put(terminalWin.getName(),terminalWin);
 
+
+
         superAppList.add(cpuWin.getName());
         superAppList.add(mainMemoryWin.getName());
         superAppList.add(diskWin.getName());
@@ -130,6 +132,9 @@ public class Controller{
         MenuItem dark=new MenuItem("夜间模式");
         MenuItem test=new MenuItem("xx");
         Menu help_menu = new Menu( "帮助");
+        MenuItem command = new MenuItem("终端命令指南");
+        MenuItem shortcut = new MenuItem("快捷键指南");
+        MenuItem member = new MenuItem("课设成员");
         Menu window_menu = new Menu("窗口");
         Menu goTo_menu = new Menu("前往");
         Menu show_menu = new Menu("显示");
@@ -140,9 +145,9 @@ public class Controller{
 
         apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
         //fffjj
-         apple_menu.getItems().add(test);
+        apple_menu.getItems().add(test);
         menu.getItems().addAll(close,setter,reset,dark);
-
+        help_menu.getItems().addAll(command,shortcut,member);
         //menuBar.getMenus().addAll(menu);
 
         menuBar.getMenus().addAll(apple_menu,menu,finder_menu,file_menu,edit_menu,show_menu,goTo_menu,window_menu,help_menu);
@@ -207,7 +212,7 @@ public class Controller{
                         "-fx-max-height: 100px;"
         );
         for (String string:superAppList)
-        bottomPane.getChildren().add(((SuperWin)winHashMap.get(string)).getButton());
+            bottomPane.getChildren().add(((SuperWin)winHashMap.get(string)).getButton());
         bottomPane.getChildren().addAll(appsButton);//添加按钮
         AppPane appPane = new AppPane(this,appList);
 
@@ -271,6 +276,55 @@ public class Controller{
             }
         });
 
+        //终端命令指南按钮事件
+        command.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                String text =
+                                "1.create : create /usr/tes.e  [创建一个带空字符的普通文件]\n"+
+                                "2.delete : delete /usr/tes.e  [删除文件]\n"+
+                                "3.cat : cat /usr/tes.e  [查看文件的内容]\n"+
+                                "4.copy : copy /usr/tes.e /drv/tes.e  [复制文件到其他的目录]\n"+
+                                "5.mv : mv /usr/tes.e /drv/tes.e  [移动文件到其他的目录]\n"+
+                                "6.echo : echo \"ABC\" > /usr/tes.e  [重定向输入文本到文件中,双引号包含输入内容]\n"+
+                                "7.mkdir : mkdir /usr/bin  [创建一个目录]\n"+
+                                "8.rmdir : rmdir /usr/bin  [删除一个目录]\n"+
+                                "9.exe : exe /usr/000/e  [执行一个可执行的文件]\n"+
+                                "10.time : time  [查看当前系统的时间片]\n"+
+                                "11.clear : clear  [清屏]\n"+
+                                "12.poweroff : poweroff  [关机]\n"+
+                                "13.system : system  [系统开发者]\n"+
+                                "14.compile : compile /usr/abc.s [在当前目录下生成编译文件,编译前必须删除以前的编译文件]\n"+
+                                "15.close : close /usr/005.e  [手动关闭文件]\n"
+                             ;
+
+                creatHelpWin("终端命令指南",text);
+            }
+        });
+
+        //快捷键指南按钮事件
+        shortcut.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                String text =
+                        "S:打开设置面板\n"+
+                                "Q:关机\n"+
+                                "Z:切换壁纸\n"+
+                                "T:打开终端"
+                        ;
+                creatHelpWin("快捷键指南",text);
+            }
+        });
+
+        //课设人员按钮事件
+        member.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                String text = "课程设计的开发人员：\n================\n\t朱勇杰,林明凭\n\t林嘉渝,梁晓嘉\n\t彭志凯\n================\n";
+                creatHelpWin("课设成员",text);
+            }
+        });
+
         dark.setOnAction(new EventHandler<ActionEvent>() {
 
 
@@ -280,7 +334,7 @@ public class Controller{
 
                 if (Controller.dark)
                 {
-                     dark.setText("日间模式");
+                    dark.setText("日间模式");
                     menuBar.setStyle("-fx-background-color: #1C1D22");
                     controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
                     timeText.setFill(Color.WHITE);
@@ -441,7 +495,7 @@ public class Controller{
         });
 
         /**
-        **
+         **
          * @description: 右键单开菜单的功能，这两段代码耦合度很高，复制粘贴没有做抽取成组件方式调用，功能基本能实现（除了不会终端的打开命令）
          * @param: 鼠标右键就能触发菜单
          * @return:
@@ -542,6 +596,18 @@ public class Controller{
             positonI = (++positonI) % position.length;
             win.setTranslate(position[positonI]);
         }
+    }
+
+
+    //创建窗口的方法，用于帮助窗口的创建
+    public void creatHelpWin(String name,String text){
+        int id = -1;
+        HelpWin win = new HelpWin(this,name,id,text);
+        this.getCenterPane().getChildren().add(win.getStage());
+        this.getWinHashMap().put(name, win);
+        positonI = (++positonI) % position.length;
+        win.setTranslate(position[positonI]);
+
     }
 
 
@@ -797,7 +863,7 @@ class ControllerSetter extends SuperWin{
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                    work();
+                work();
             }
         });
     }

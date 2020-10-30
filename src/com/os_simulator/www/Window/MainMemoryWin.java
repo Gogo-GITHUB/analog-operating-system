@@ -93,11 +93,10 @@ public class MainMemoryWin extends SuperWin {
         //获取一次systemCore
         if (isUpdate){
             if (systemCore != null){
-                core= systemCore;
-                isUpdate = false;
+                core=systemCore;
             }
         }
-        text2.setText("内存使用："+systemCore.getMemoryUsed());
+        text2.setText("内存使用："+core.getMemoryUsed());
     }
 
     private Pane memdatadisplay(){

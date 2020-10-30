@@ -309,6 +309,7 @@ public class Controller{
                 String text =
                         "S:打开设置面板\n"+
                                 "Q:关机\n"+
+                                "D:切换外观\n"+
                                 "Z:切换壁纸\n"+
                                 "T:打开终端"
                         ;
@@ -366,7 +367,7 @@ public class Controller{
 
         /**
 
-         *@description: 【快捷键的设置，T打开终端，Q关闭程序，S打开设置，Z切换壁纸】
+         *@description: 【快捷键的设置，T打开终端，Q关闭程序，D切换模式，S打开设置，Z切换壁纸】
          * 暂时没有优化代码，因此代码耦合度比较高【实现功能第一，优化第二】
 
          * @param:  按键TQSZ
@@ -401,6 +402,38 @@ public class Controller{
                         controllerSetter.getStage().setTranslateY(position[positonI]);
                         controllerSetter.setOpen(true);
                     }
+                }else if (event.getCode().name().equals(KeyCode.D.getName())){
+                    System.out.println("键盘按下了按键=D");
+                    System.out.println("切换颜色（黑/白）模式");
+                    Controller.dark=!Controller.dark;
+
+                    if (Controller.dark)
+                    {
+                        dark.setText("日间模式");
+                        menuBar.setStyle("-fx-background-color: #1C1D22");
+                        controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
+                        timeText.setFill(Color.WHITE);
+
+                        for(String s:superAppList)
+                        {
+                            winHashMap.get(s).rectangle.setFill(Color.valueOf("#4A4644"));//黑带长条设置
+                            winHashMap.get(s).winName.setFill(Color.WHITE);//窗口名称设置
+                        }
+                    }
+                    else{
+                        dark.setText("夜间模式");
+                        menuBar.setStyle("-fx-background-color: white");
+                        controller.getImageView().setImage(new Image("/Background/El Capitan.jpg"));
+                        timeText.setFill(Color.BLACK);
+                        for(String s:superAppList)
+                        {
+                            winHashMap.get(s).rectangle.setFill(Color.valueOf("#D3D3D3"));//黑带长条设置
+                            winHashMap.get(s).winName.setFill(Color.BLACK);//窗口名称设置
+
+                        }
+
+                    }
+
                 }else if(event.getCode().name().equals(KeyCode.Q.getName())){
                     System.out.println("键盘按下了按键=Q");
                     System.out.println("关闭程序");
@@ -429,10 +462,13 @@ public class Controller{
         ContextMenu rightButtonMenu = new ContextMenu();
         MenuItem setting = new MenuItem("设置(S)");
         MenuItem closeMyWin = new MenuItem("关机(Q)");//关机按钮
+        MenuItem darkWhite = new MenuItem("切换外观(D)");//深色主题和浅色主题
         MenuItem nextPic = new MenuItem("切换壁纸(Z)");
         MenuItem termial = new MenuItem("打开终端(T)");
 
-        rightButtonMenu.getItems().addAll(setting,closeMyWin,nextPic, termial);
+
+        rightButtonMenu.getItems().addAll(setting,closeMyWin,darkWhite,nextPic, termial);
+
 
         termial.setOnAction(new EventHandler<ActionEvent>()
         {
@@ -456,6 +492,42 @@ public class Controller{
             public void handle(ActionEvent event)
             {
                 System.exit(0);
+            }
+        });
+
+        darkWhite.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                Controller.dark=!Controller.dark;
+
+                if (Controller.dark)
+                {
+                    dark.setText("日间模式");
+                    menuBar.setStyle("-fx-background-color: #1C1D22");
+                    controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
+                    timeText.setFill(Color.WHITE);
+
+                    for(String s:superAppList)
+                    {
+                        winHashMap.get(s).rectangle.setFill(Color.valueOf("#4A4644"));//黑带长条设置
+                        winHashMap.get(s).winName.setFill(Color.WHITE);//窗口名称设置
+                    }
+                }
+                else{
+                    dark.setText("夜间模式");
+                    menuBar.setStyle("-fx-background-color: white");
+                    controller.getImageView().setImage(new Image("/Background/El Capitan.jpg"));
+                    timeText.setFill(Color.BLACK);
+                    for(String s:superAppList)
+                    {
+                        winHashMap.get(s).rectangle.setFill(Color.valueOf("#D3D3D3"));//黑带长条设置
+                        winHashMap.get(s).winName.setFill(Color.BLACK);//窗口名称设置
+
+                    }
+
+                }
             }
         });
 

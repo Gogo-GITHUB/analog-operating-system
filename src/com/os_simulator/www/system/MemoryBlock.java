@@ -14,7 +14,8 @@ public class MemoryBlock {
     }
 
     public int getSize() {
-        return size;
+        return 2;
+//        return size;
     }
 
     public void setSize(int size) {

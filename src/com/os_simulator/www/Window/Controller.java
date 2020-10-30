@@ -127,7 +127,7 @@ public class Controller{
         MenuItem close = new MenuItem("关机");//关机按钮
         MenuItem setter = new MenuItem("设置");
         MenuItem reset = new MenuItem("窗口重置");
-        MenuItem dark=new MenuItem("暗夜模式");
+        MenuItem dark=new MenuItem("夜间模式");
         MenuItem test=new MenuItem("xx");
         Menu help_menu = new Menu( "帮助");
         Menu window_menu = new Menu("窗口");
@@ -137,6 +137,7 @@ public class Controller{
         Menu file_menu = new Menu("文件");
         Menu finder_menu = new Menu("访达");
         Menu apple_menu = new Menu();
+
         apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
         //fffjj
          apple_menu.getItems().add(test);
@@ -279,6 +280,7 @@ public class Controller{
 
                 if (Controller.dark)
                 {
+                     dark.setText("日间模式");
                     menuBar.setStyle("-fx-background-color: #1C1D22");
                     controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
                     timeText.setFill(Color.WHITE);
@@ -290,6 +292,7 @@ public class Controller{
                     }
                 }
                 else{
+                    dark.setText("夜间模式");
                     menuBar.setStyle("-fx-background-color: white");
                     controller.getImageView().setImage(new Image("/Background/El Capitan.jpg"));
                     timeText.setFill(Color.BLACK);

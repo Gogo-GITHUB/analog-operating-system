@@ -126,7 +126,7 @@ public class TerminalWin extends SuperWin {
                             textArea.setText("");
                             break;
                         case "time":
-                            textArea.appendText("当前系统运行了"+systemCore.getSystemTime()+"个时间片");
+                            textArea.appendText("当前系统运行了"+systemCore.getSystemTime()+"个时间片\n");
                             break;
                         case "system":
                             textArea.setText("");

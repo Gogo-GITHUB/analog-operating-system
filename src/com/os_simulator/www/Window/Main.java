@@ -65,6 +65,7 @@ public class Main extends Application {
         });
 
         Scene scene = new Scene(controller.getBase());//主界面
+
         readyPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

@@ -144,7 +144,6 @@ public class Controller{
         Menu apple_menu = new Menu();
 
         apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
-        //fffjj
         apple_menu.getItems().add(test);
         menu.getItems().addAll(close,setter,reset,dark);
         help_menu.getItems().addAll(command,shortcut,member);
@@ -186,7 +185,8 @@ public class Controller{
         //work_box.setMargin(dianliang_imageView,new Insets(20));
         work_box.setSpacing(15);
 
-        //topPane.getChildren().addAll(menuBar,timeText);
+
+
         topPane.getChildren().addAll(menuBar,timeText);
 
 
@@ -326,8 +326,8 @@ public class Controller{
             }
         });
 
-        dark.setOnAction(new EventHandler<ActionEvent>() {
 
+        dark.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -336,9 +336,17 @@ public class Controller{
                 if (Controller.dark)
                 {
                     dark.setText("日间模式");
+
                     menuBar.setStyle("-fx-background-color: #1C1D22");
                     controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
                     timeText.setFill(Color.WHITE);
+
+                   // menuBar.setStyle("-fx-text-fill: white");
+                   // menuBar.setStyle("-fx-font-style: white");
+                    //menu.setStyle("-fx-text-fill: white");
+                   // menu.setStyle("-fx-font-style: white");
+
+                    apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));apple_menu.setGraphic(new ImageView(new Image("/icons/white_apple.png",25,25,false,false)));
 
                     for(String s:superAppList)
                     {
@@ -413,6 +421,13 @@ public class Controller{
                         menuBar.setStyle("-fx-background-color: #1C1D22");
                         controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
                         timeText.setFill(Color.WHITE);
+
+                        //try
+                        menu.setStyle(("-fx-text-fill:white"));
+                        //menuBar.setStyle(("-fx-text-fill:white"));
+                        //menu.setText("-fx-text-fill:white");
+
+
 
                         for(String s:superAppList)
                         {
@@ -509,10 +524,19 @@ public class Controller{
                     controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
                     timeText.setFill(Color.WHITE);
 
+                    //菜单栏文字设置白色
+                    menu.setStyle(("-fx-text-fill:white"));
+                    //menu.setFill(Color.WHITE);
+
+
+
                     for(String s:superAppList)
                     {
                         winHashMap.get(s).rectangle.setFill(Color.valueOf("#4A4644"));//黑带长条设置
                         winHashMap.get(s).winName.setFill(Color.WHITE);//窗口名称设置
+
+
+
                     }
                 }
                 else{
@@ -520,10 +544,15 @@ public class Controller{
                     menuBar.setStyle("-fx-background-color: white");
                     controller.getImageView().setImage(new Image("/Background/El Capitan.jpg"));
                     timeText.setFill(Color.BLACK);
+
+
+
+
                     for(String s:superAppList)
                     {
                         winHashMap.get(s).rectangle.setFill(Color.valueOf("#D3D3D3"));//黑带长条设置
                         winHashMap.get(s).winName.setFill(Color.BLACK);//窗口名称设置
+
 
                     }
 

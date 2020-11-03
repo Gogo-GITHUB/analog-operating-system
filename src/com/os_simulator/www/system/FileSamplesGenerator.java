@@ -2,10 +2,7 @@ package com.os_simulator.www.system;
 import java.util.List;
 import java.util.LinkedList;
 /**
- * Created by Demkors Infinity (iDemkors) in 2016/11/30
- * iDemkors允许您自由参考并引用此源代码之内容。如有疑问，请咨询iDemkors或大神。
- * iDemkors promises you can have a view of the source code and/or use it freely.
- * If having any question, contact iDemkors or God.
+
  *
  * 【演示文件生成器】生成3个目录、10个演示可执行文件（如没有）；特供，由文件系统调用
  */
@@ -54,7 +51,7 @@ class FileSamplesGenerator {
                 dirPath = "/etc";
             if (i>=6)
                 dirPath = "/drv";
-            fileSystem.createFile(dirPath,fileSystem.dirType);
+            fileSystem.createFile(dirPath,fileSystem.dirType);//生成目录
 
             for (int j=0;j<3;i++,j++){
                 String filePath = dirPath + "/" + fileName;

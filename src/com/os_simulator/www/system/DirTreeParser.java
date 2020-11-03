@@ -2,10 +2,7 @@ package com.os_simulator.www.system;
 import java.util.List;
 
 /**
- * Created by Demkors Infinity (iDemkors) in 2016/11/28
- * iDemkors允许您自由参考并引用此源代码之内容。如有疑问，请咨询iDemkors或大神。
- * iDemkors promises you can have a view of the source code and/or use it freely.
- * If having any question, contact iDemkors or God.
+
  *
  * 【目录树解析器】生成JSON格式的文件系统目录树；特供，由文件系统调用
  */

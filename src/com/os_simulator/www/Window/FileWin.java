@@ -22,22 +22,23 @@ public class FileWin extends Win{
         textArea.setTranslateY(10);
         textArea.setMinSize(380,250);
         textArea.setMaxSize(380,250);
-        textArea.setEditable(false);
-
-
+        textArea.setStyle("-fx-font-family: Times New Roman");
+        textArea.setStyle("-fx-font-weight:bold");
         pane.getChildren().add(textArea);
         this.setPane(pane);
 
         this.id = id;
-        stringBuilder.append("ID:"+id+"\n==================\n");
+        stringBuilder.append("PID:"+id+"\n"+this.getName()+" is running"+"\n==================\n");
+
     }
 
     @Override
     public void update(){
+        textArea.setEditable(false);
         if(isUpdate) {
             int y = controller.getSystemCore().getX(id);
             if (y == flag){
-                stringBuilder.append("==================\nend");
+                stringBuilder.append("==================\n"+this.getName()+" ends");
                 isUpdate = false;
             }
             else if (x != y) {

@@ -3,10 +3,7 @@ import com.os_simulator.www.hardware.CPU;
 import java.util.*;
 import java.util.HashMap;
 /**
- * Created by Demkors Infinity (iDemkors) in 2016/10/30
- * iDemkors允许您自由参考并引用此源代码之内容。如有疑问，请咨询iDemkors或大神。
- * iDemkors promises you can have a view of the source code and/or use it freely.
- * If having any question, contact iDemkors or God.
+
  *
  * 【文件系统】模拟系统底层的文件管理，采用FAT格式
  */
@@ -64,7 +61,7 @@ public class FileSystem {
             }
         }
         if (FAT.length>sectorsForFAT){
-            if (FAT[0]!=endCode) availableSectors-=(sectorsForFAT+1);
+            if (FAT[0]!=endCode) availableSectors-=(sectorsForFAT+1);//超出可用盘块，退回
             for (i=0;i<sectorsForFAT+1;i++){
                 FAT[i] = endCode;
             }

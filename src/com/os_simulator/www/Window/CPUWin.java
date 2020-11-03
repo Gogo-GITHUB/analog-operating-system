@@ -45,6 +45,15 @@ public class CPUWin extends SuperWin{
         Text text2 = new Text("剩余时间片:");
         Text text3 = new Text("正在执行指令:");
         Text text4 = new Text("系统时间：");
+        text1.setStyle("-fx-font-family: Times New Roman");
+        text1.setStyle("-fx-font-weight:bold");
+        text2.setStyle("-fx-font-family: Times New Roman");
+        text2.setStyle("-fx-font-weight:bold");
+        text3.setStyle("-fx-font-family: Times New Roman");
+        text3.setStyle("-fx-font-weight:bold");
+        text4.setStyle("-fx-font-family: Times New Roman");
+        text4.setStyle("-fx-font-weight:bold");
+
         textField1.setEditable(false);
         textField1.setMaxSize(100,20);
         textField2.setEditable(false);
@@ -53,6 +62,16 @@ public class CPUWin extends SuperWin{
         textField3.setMaxSize(100,20);
         textField4.setEditable(false);
         textField4.setMaxSize(100,20);
+
+        textField1.setStyle("-fx-font-family: Times New Roman");
+        textField1.setStyle("-fx-font-weight:bold");
+        textField2.setStyle("-fx-font-family: Times New Roman");
+        textField2.setStyle("-fx-font-weight:bold");
+        textField3.setStyle("-fx-font-family: Times New Roman");
+        textField3.setStyle("-fx-font-weight:bold");
+        textField4.setStyle("-fx-font-family: Times New Roman");
+        textField4.setStyle("-fx-font-weight:bold");
+
         imageView.setFitHeight(70);
         imageView.setFitWidth(70);
         button.setGraphic(imageView);
@@ -103,6 +122,8 @@ public class CPUWin extends SuperWin{
         ListView listView1 = new ListView(preparingProcessIds);//创建ListView
         listView1.setMaxSize(120,200);//ListView大小设置
         Text text5 = new Text("就绪队列：");
+        text5.setStyle("-fx-font-family: Times New Roman");
+        text5.setStyle("-fx-font-weight:bold");
         centerPane.getChildren().addAll(text5,listView1);//添加节点
 
         //右侧面板
@@ -111,6 +132,8 @@ public class CPUWin extends SuperWin{
         ListView listView2 = new ListView(cloggingProcessIds);//创建ListView
         listView2.setMaxSize(120,200);//ListView大小设置
         Text text6 = new Text("阻塞队列：");
+        text6.setStyle("-fx-font-family: Times New Roman");
+        text6.setStyle("-fx-font-weight:bold");
         rightPane.getChildren().addAll(text6,listView2);//添加节点
 
         //主面板设置；

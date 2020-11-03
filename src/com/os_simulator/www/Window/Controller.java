@@ -142,6 +142,13 @@ public class Controller{
         Menu file_menu = new Menu("文件");
         Menu finder_menu = new Menu("访达");
         Menu apple_menu = new Menu();
+        Menu blank0_menu =  new Menu("                                        ");
+        Menu black1_menu = new Menu("                                         ");
+        Menu black2_menu = new Menu("                                        ");
+        Menu black3_menu = new Menu("                                              ");
+        Menu black4_menu = new Menu("                                              ");
+        Menu black5_menu = new Menu("sss");
+
 
         apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
         apple_menu.getItems().add(test);
@@ -149,7 +156,10 @@ public class Controller{
         help_menu.getItems().addAll(command,shortcut,member);
         //menuBar.getMenus().addAll(menu);
 
+
         menuBar.getMenus().addAll(apple_menu,menu,finder_menu,file_menu,edit_menu,show_menu,goTo_menu,window_menu,help_menu);
+        //menuBar.setUseSystemMenuBar(true);
+
 
         SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         //SimpleDateFormat time = new SimpleDateFormat("E HH:mm");
@@ -341,12 +351,9 @@ public class Controller{
                     controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
                     timeText.setFill(Color.WHITE);
 
-                   // menuBar.setStyle("-fx-text-fill: white");
-                   // menuBar.setStyle("-fx-font-style: white");
-                    //menu.setStyle("-fx-text-fill: white");
-                   // menu.setStyle("-fx-font-style: white");
 
-                    apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));apple_menu.setGraphic(new ImageView(new Image("/icons/white_apple.png",25,25,false,false)));
+                   // apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
+                    apple_menu.setGraphic(new ImageView(new Image("/icons/white_apple.png",25,25,false,false)));
 
                     for(String s:superAppList)
                     {
@@ -359,6 +366,10 @@ public class Controller{
                     menuBar.setStyle("-fx-background-color: white");
                     controller.getImageView().setImage(new Image("/Background/El Capitan.jpg"));
                     timeText.setFill(Color.BLACK);
+
+                    apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
+
+
                     for(String s:superAppList)
                     {
                         winHashMap.get(s).rectangle.setFill(Color.valueOf("#D3D3D3"));//黑带长条设置
@@ -422,8 +433,10 @@ public class Controller{
                         controller.getImageView().setImage(new Image("/Background/Catalina Night.jpg"));
                         timeText.setFill(Color.WHITE);
 
+                        apple_menu.setGraphic(new ImageView(new Image("/icons/white_apple.png",25,25,false,false)));
+
                         //try
-                        menu.setStyle(("-fx-text-fill:white"));
+                        //menu.setStyle(("-fx-text-fill:white"));
                         //menuBar.setStyle(("-fx-text-fill:white"));
                         //menu.setText("-fx-text-fill:white");
 
@@ -440,6 +453,9 @@ public class Controller{
                         menuBar.setStyle("-fx-background-color: white");
                         controller.getImageView().setImage(new Image("/Background/El Capitan.jpg"));
                         timeText.setFill(Color.BLACK);
+
+                        apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
+
                         for(String s:superAppList)
                         {
                             winHashMap.get(s).rectangle.setFill(Color.valueOf("#D3D3D3"));//黑带长条设置
@@ -525,8 +541,9 @@ public class Controller{
                     timeText.setFill(Color.WHITE);
 
                     //菜单栏文字设置白色
-                    menu.setStyle(("-fx-text-fill:white"));
+                   // menu.setStyle(("-fx-text-fill:white"));
                     //menu.setFill(Color.WHITE);
+                    apple_menu.setGraphic(new ImageView(new Image("/icons/white_apple.png",25,25,false,false)));
 
 
 
@@ -545,6 +562,7 @@ public class Controller{
                     controller.getImageView().setImage(new Image("/Background/El Capitan.jpg"));
                     timeText.setFill(Color.BLACK);
 
+                    apple_menu.setGraphic(new ImageView(new Image("/icons/black_apple.png",25,25,false,false)));
 
 
 

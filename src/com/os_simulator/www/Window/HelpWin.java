@@ -16,12 +16,12 @@ public class HelpWin extends Win{
     private TextArea textArea = new TextArea();
 
     public HelpWin(Controller controller, String name, int id ,String text){
-        super(controller,name,610,325);
+        super(controller,name,680,395);
         Pane pane = new Pane();
         textArea.setTranslateX(10);
         textArea.setTranslateY(10);
-        textArea.setMinSize(590,280);
-        textArea.setMaxSize(590,280);
+        textArea.setMinSize(660,350);
+        textArea.setMaxSize(660,350);
         textArea.setEditable(false);
 
 

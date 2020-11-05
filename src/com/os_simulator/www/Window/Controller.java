@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -140,6 +141,9 @@ public class Controller{
         Menu show_menu = new Menu("显示");
         Menu edit_menu = new Menu("编辑");
         Menu file_menu = new Menu("文件");
+        Controller controller=this;
+
+
         Menu finder_menu = new Menu("访达");
         Menu apple_menu = new Menu();
         Menu blank0_menu =  new Menu("                                        ");
@@ -165,7 +169,7 @@ public class Controller{
         //SimpleDateFormat time = new SimpleDateFormat("E HH:mm");
 
         Text timeText = new Text();//当前时间文本
-        Controller controller=this;
+
         Thread runningTime = new Thread(){//内部类线程，不停获取当前时间
             @Override
             public void run() {
@@ -299,7 +303,7 @@ public class Controller{
                                 "6.echo : echo \"ABC\" > /usr/tes.e  [重定向输入文本到文件中,双引号包含输入内容]\n"+
                                 "7.mkdir : mkdir /usr/bin  [创建一个目录]\n"+
                                 "8.rmdir : rmdir /usr/bin  [删除一个目录]\n"+
-                                "9.exe : exe /usr/000/e  [执行一个可执行的文件]\n"+
+                                "9.exe : exe /usr/000.e  [执行一个可执行的文件]\n"+
                                 "10.time : time  [查看当前系统的时间片]\n"+
                                 "11.clear : clear  [清屏]\n"+
                                 "12.poweroff : poweroff  [关机]\n"+

@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -123,7 +124,7 @@ public class Controller{
         topPane.maxWidthProperty().bind(baseWidth);
         topPane.setMinHeight(30);
         topPane.setMaxHeight(30);
-
+        Controller controller=this;
         menuBar.minWidthProperty().bind(topPane.minHeightProperty());
         Menu menu = new Menu("    菜单    ");//菜单按钮
         menu.setStyle("-fx-text-fill:white");
@@ -138,11 +139,86 @@ public class Controller{
         MenuItem member = new MenuItem("课设成员");
         Menu window_menu = new Menu("窗口");
         Menu goTo_menu = new Menu("前往");
+        MenuItem cpuWindow=new MenuItem("CPU状态");
+        MenuItem diskWindow=new MenuItem("磁盘状态");
+        MenuItem memoryWindow=new MenuItem("内存状态");
+        MenuItem deviceWindow=new MenuItem("设备状态");
+        cpuWindow.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(!cpuWin.isOpen()){
+                    controller.positonI = (++controller.positonI)%controller.position.length;
+                    controller.getCenterPane().getChildren().add(cpuWin.stage);
+                    cpuWin.setTranslate(controller.position[controller.positonI]);
+                    cpuWin.setOpen(true);
+                }else{
+                    cpuWin.getStage().toFront();
+                }
+            }
+        });
+        diskWindow.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(!diskWin.isOpen()){
+                    controller.positonI = (++controller.positonI)%controller.position.length;
+                    controller.getCenterPane().getChildren().add(diskWin.stage);
+                    diskWin.setTranslate(controller.position[controller.positonI]);
+                    diskWin.setOpen(true);
+                }else{
+                    diskWin.getStage().toFront();
+                }
+            }
+        });
+        memoryWindow.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(!mainMemoryWin.isOpen()){
+                    controller.positonI = (++controller.positonI)%controller.position.length;
+                    controller.getCenterPane().getChildren().add(mainMemoryWin.stage);
+                    mainMemoryWin.setTranslate(controller.position[controller.positonI]);
+                    mainMemoryWin.setOpen(true);
+                }else{
+                    mainMemoryWin.getStage().toFront();
+                }
+            }
+        });
+        deviceWindow.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(!deviceWin.isOpen()){
+                    controller.positonI = (++controller.positonI)%controller.position.length;
+                    controller.getCenterPane().getChildren().add(deviceWin.stage);
+                    deviceWin.setTranslate(controller.position[controller.positonI]);
+                    deviceWin.setOpen(true);
+                }else{
+                    deviceWin.getStage().toFront();
+                }
+            }
+        });
+
+        goTo_menu.getItems().addAll(cpuWindow,diskWindow,memoryWindow,deviceWindow);
+
+
         Menu show_menu = new Menu("显示");
         Menu edit_menu = new Menu("编辑");
         Menu file_menu = new Menu("文件");
-        Controller controller=this;
+        MenuItem item=new MenuItem("xx");
+        file_menu.getItems().addAll(item);
 
+        file_menu.addEventHandler(Menu.ON_SHOWING, new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                if(!dictionaryWin.isOpen()){
+                    controller.positonI = (++controller.positonI)%controller.position.length;
+                    controller.getCenterPane().getChildren().add(dictionaryWin.stage);
+                    dictionaryWin.setTranslate(controller.position[controller.positonI]);
+                    dictionaryWin.setOpen(true);
+                }else{
+                    dictionaryWin.getStage().toFront();
+                }
+            }
+
+        });
 
         Menu finder_menu = new Menu("访达");
         Menu apple_menu = new Menu();

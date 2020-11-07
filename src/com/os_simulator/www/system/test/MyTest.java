@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by geange on 16-11-26.
- */
 public class MyTest {
     public static void main(String[] args){
         List<Integer> list = new ArrayList<>();

@@ -8,10 +8,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-
-/**
- * Created by Sean on 2016/10/26.
- */
 public class DeviceWin extends SuperWin {
 
     private Image image = new Image("/icons/devices.png");

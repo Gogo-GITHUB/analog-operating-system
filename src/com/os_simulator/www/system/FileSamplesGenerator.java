@@ -2,7 +2,6 @@ package com.os_simulator.www.system;
 import java.util.List;
 import java.util.LinkedList;
 /**
-
  *
  * 【演示文件生成器】生成3个目录、10个演示可执行文件（如没有）；特供，由文件系统调用
  */

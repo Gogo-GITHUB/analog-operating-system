@@ -1,11 +1,6 @@
 package com.os_simulator.www.Window;
 
 
-
-/**
- * Created by Sean on 2016/11/11.
- */
-
 //更新模块，更新窗口状态
 public class UpdateCenter implements Runnable{
 

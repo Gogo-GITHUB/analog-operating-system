@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * 内存空间的管理类
- * Created by geange on 16-11-21.
  */
 public class MemoryController {
 

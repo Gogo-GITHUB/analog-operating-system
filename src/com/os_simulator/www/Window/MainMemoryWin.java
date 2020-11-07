@@ -19,9 +19,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by Zach on 2016/12/4.
- */
 public class MainMemoryWin extends SuperWin {
 
     private SystemCore core = null;

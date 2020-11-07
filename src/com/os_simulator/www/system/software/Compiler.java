@@ -4,10 +4,6 @@ package com.os_simulator.www.system.software;
 import com.os_simulator.www.system.OSFile;
 import com.os_simulator.www.system.OSFile;
 
-/**
- *
- * Created by geange on 16-9-12.
- */
 public class Compiler {
 
     //寄存器

@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
-
  * 【文件】模拟系统内的文件
  */
 class MyFile {

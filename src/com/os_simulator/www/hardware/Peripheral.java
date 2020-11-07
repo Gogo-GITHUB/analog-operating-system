@@ -1,11 +1,6 @@
 package com.os_simulator.www.hardware;
 
 /**
- * Created by Demkors Infinity (iDemkors) in 2016/9/10
- * iDemkors允许您自由参考并引用此源代码之内容。如有疑问，请咨询iDemkors或大神。
- * iDemkors promises you can have a view of the source code and/or use it freely.
- * If having any question, contact iDemkors or God.
- *
  * 【外围设备】模拟占用外围设备并产生I/O中断，无其他任何功能
  * 【特定状态】【127】设备被占用 【-1】中断发生
  */

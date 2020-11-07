@@ -23,9 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Sean on 2016/10/26.
- */
 public class DiskWin extends SuperWin{
 
     private int LENGTH = 12;

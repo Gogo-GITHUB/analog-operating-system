@@ -3,9 +3,7 @@ package com.os_simulator.www.Window;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 
-/**
- * Created by Sean on 2016/10/26.
- */
+
 public class FileWin extends Win{
 
     private boolean isUpdate = true;

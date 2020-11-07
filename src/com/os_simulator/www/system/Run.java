@@ -6,8 +6,6 @@ import com.os_simulator.www.system.software.Compiler;
 import java.util.List;
 
 /**
- * Created by geange on 16-11-20.
- *
  * 测试ExcuteTask和SystemTime
  */
 public class Run {

@@ -1,10 +1,6 @@
 package com.os_simulator.www.hardware;
 
 /**
- * Created by Demkors Infinity (iDemkors) in 2016/9/7
- * iDemkors允许您自由参考并引用此源代码之内容。如有疑问，请咨询iDemkors或大神。
- * iDemkors promises you can have a view of the source code and/or use it freely.
- * If having any question, contact iDemkors or God.
  */
 //【硬件设备】抽象类，默认无任何模拟功能，声明硬件ID、状态及获取方法。必须被除CPU之外的硬件类继承。
 class HardDevice {

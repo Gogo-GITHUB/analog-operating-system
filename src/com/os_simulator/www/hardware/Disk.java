@@ -4,10 +4,6 @@ import java.io.*;
 import java.util.Arrays;
 
 /**
- * Created by Demkors Infinity (iDemkors) in 2016/9/7
- * iDemkors允许您自由参考并引用此源代码之内容。如有疑问，请咨询iDemkors或大神。
- * iDemkors promises you can have a view of the source code and/or use it freely.
- * If having any question, contact iDemkors or God.
  *
  * 【硬盘声明】硬盘为最底层硬件，需“分区表”协助记录，设想为“分区表”继承此硬盘类/“分区表”构造时传参硬盘
  * 【特定状态】【101】未从实际硬盘读数据 【102】未保存至实际硬盘 【105】在实际硬盘初始化失败

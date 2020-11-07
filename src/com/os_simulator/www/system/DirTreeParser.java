@@ -2,8 +2,6 @@ package com.os_simulator.www.system;
 import java.util.List;
 
 /**
-
- *
  * 【目录树解析器】生成JSON格式的文件系统目录树；特供，由文件系统调用
  */
 class DirTreeParser {

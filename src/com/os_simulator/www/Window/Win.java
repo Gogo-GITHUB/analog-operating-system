@@ -14,9 +14,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-/**
- * Created by Sean on 2016/11/1.
- */
 public abstract class Win {
 
 

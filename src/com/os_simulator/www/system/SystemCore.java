@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * 操作系统的内核
- * Created by geange on 16-11-21.
  */
 public class SystemCore {
     //系统时间

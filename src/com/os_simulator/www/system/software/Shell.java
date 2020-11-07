@@ -5,10 +5,7 @@ import com.os_simulator.www.system.FileSystem;
 import com.os_simulator.www.system.OSFile;
 
 /**
- * Created by geange on 16-11-24.
  * 用户命令接口，用来执行用户输入的指令并返回相应的数据
- *
- *
  */
 public class Shell {
 

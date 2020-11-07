@@ -6,7 +6,6 @@ import com.os_simulator.www.system.software.Compiler;
 import java.util.*;
 
 /**
- * Created by geange on 16-11-17.
  * 执行线程，执行可执行文件并进行调度
  */
 public class ExcuteTask extends Thread{

@@ -1,8 +1,6 @@
 package com.os_simulator.www.system;
 
-/**
- * Created by geange on 16-11-20.
- */
+
 public class SimulationThread {
 
     //自增判定线程的ID

@@ -53,7 +53,7 @@ public class FileSystem {
     private void initialize(){
         int i;
         availableSectors=0;
-        int sectorsForFAT = cpu.getDiskSectorCount()/sectorSize;//可用盘块
+        int sectorsForFAT = cpu.getDiskSectorCount()/sectorSize;//需要用于fat的盘块数
         for (i=0;i<sectorsForFAT;i++){
             byte[] temp = cpu.readDisk(i);//读取磁盘，写入fat
             for (int j=0;j<sectorSize;j++){
@@ -105,10 +105,11 @@ public class FileSystem {
                         data = new byte[(sectorCount+1)*sectorSize];
                         System.arraycopy(oldData,0,data,0,oldData.length);
                         System.arraycopy(rawData,0,data,sectorCount*sectorSize,sectorSize);
+                        //旧数据和新数据整合
                     }
                     sectorCount++;
 
-                    for (int i=0;i<8;i++){//读取下层的子文件
+                    for (int i=0;i<8;i++){//读取当前盘块的下层的子文件
                         byte[] rawRecord = Arrays.copyOfRange(rawData,i*8,(i+1)*8);
                         if (Arrays.equals(emptyRecord,rawRecord)) break;//空记录退出
                         MyFile new_file = new MyFile();

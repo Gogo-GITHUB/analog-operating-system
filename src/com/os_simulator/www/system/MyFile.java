@@ -6,13 +6,21 @@ import java.util.List;
  * 【文件】模拟系统内的文件
  */
 class MyFile {
+    /**
+
+     目录名或文件名：3 个字节；
+     扩展名： 1 个字节（可执行文件扩展名为 e，目录没有扩展名） ；
+     目录属性、文件属性：1 字节；
+     起始盘号：1 字节；
+     文件长度：2 字节
+     */
     private byte[] data;
     private byte[] name;
     private byte extName;//扩展名
     private byte attribute;//属性
     private byte startingSector;//起始扇区
     private short length;//长度
-    private boolean hasError;
+    private boolean hasError;//状态标注
     private List<MyFile> subFiles;//子文件夹
     /**
      *初始化文件
@@ -76,7 +84,7 @@ class MyFile {
         char[] name = new_name.toCharArray();
         int length = new_name.length();
         if (length>=1){
-            if (name[0]>255){
+            if (name[0]>255){//分割成两个字节
                 this.name[0]=(byte)(name[0]%256);
                 this.name[1]=(byte)(name[0]/256);
                 split = true;
@@ -102,7 +110,7 @@ class MyFile {
         char[] data = new_data.toCharArray();
         int length = new_data.length();
         this.data = new byte[length];
-        for (int i=0;i<length;i++){
+        for (int i=0;i<length;i++){//逐个字符写入
             this.data[i] = (byte)data[i];
         }
         this.length = (short)length;
@@ -130,6 +138,8 @@ class MyFile {
 
     /**
      *更改文件的属性
+     * 第 0 位表示文件为只读文件，第 1 位表示文件为系统文件，第 2 位表示文件为
+     * 可读、可写的普通文件，第 3 位表示该登记项不是文件的登记项
      * @param  attribute
      */
     public boolean setAttribute(byte attribute){

@@ -191,11 +191,9 @@ public class Shell {
             //创建文件是否成功
             if (createFile(aimPath)){
                 //写入目标文件
-                if (fileSystem.writeFile(aimPath, result[0])){
-                    fileSystem.closeFile(aimPath);
-                    return "复制文件成功";
-                }
+                fileSystem.writeFile(aimPath, result[0]);
                 fileSystem.closeFile(aimPath);
+                return "复制文件成功";
             }
         }
         return "复制文件失败："+fileSystem.getStatus();

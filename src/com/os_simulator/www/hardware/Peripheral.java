@@ -1,8 +1,7 @@
 package com.os_simulator.www.hardware;
 
 /**
- * 【外围设备】模拟占用外围设备并产生I/O中断，无其他任何功能
- * 【特定状态】【127】设备被占用 【-1】中断发生
+
  */
 class Peripheral extends HardDevice{
     //被占用倒计时（计时周期暂定为0.1秒；由CPU决定，CPU周期必须为计时周期的整数倍）

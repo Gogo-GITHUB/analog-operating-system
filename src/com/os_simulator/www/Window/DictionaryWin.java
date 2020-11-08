@@ -13,6 +13,9 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
+/**
+
+ */
 public class DictionaryWin extends SuperWin {
 
     private TreeItem<String> rootItem = new TreeItem<>("OS_simulator");

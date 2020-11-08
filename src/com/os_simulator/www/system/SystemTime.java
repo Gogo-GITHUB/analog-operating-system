@@ -1,6 +1,7 @@
 package com.os_simulator.www.system;
 
 /**
+
  * 系统时间片线程
  */
 public class SystemTime extends Thread{

@@ -1,6 +1,7 @@
 package com.os_simulator.www.hardware;
 
 /**
+
  */
 //【硬件设备】抽象类，默认无任何模拟功能，声明硬件ID、状态及获取方法。必须被除CPU之外的硬件类继承。
 class HardDevice {

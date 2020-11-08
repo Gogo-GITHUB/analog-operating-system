@@ -1,6 +1,8 @@
 package com.os_simulator.www.hardware;
 
+/**
 
+ */
 class Memory extends HardDevice{
     private byte[] storage;//内存中的信息
     private int maxCapacity;//最大容量

@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Stack;
 
 
+/**
+
+ */
 public class TerminalWin extends SuperWin {
 
     private List<String> history = new ArrayList<>();

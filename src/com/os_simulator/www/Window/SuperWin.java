@@ -5,6 +5,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
+/**
+
+ */
 public abstract class SuperWin extends Win {
 
     protected boolean isOpen = false;//是否已显示在桌面上

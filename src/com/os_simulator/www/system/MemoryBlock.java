@@ -13,7 +13,7 @@ public class MemoryBlock {
     }
 
     public int getSize() {
-        return 2;
+        return size;
 //        return size;
     }
 
